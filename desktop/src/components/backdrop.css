@@ -1,0 +1,32 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: var(--bg);
+  overflow: hidden;
+}
+
+.backdrop-mist {
+  position: absolute;
+  inset: -10%;
+  background:
+    radial-gradient(38% 46% at 14% 18%, var(--bg-mist-1), transparent 70%),
+    radial-gradient(34% 42% at 88% 30%, var(--bg-mist-2), transparent 72%),
+    radial-gradient(44% 40% at 62% 96%, var(--bg-mist-3), transparent 70%),
+    radial-gradient(30% 34% at 8% 88%, var(--bg-mist-2), transparent 72%);
+  filter: blur(40px);
+}
+
+.backdrop-grain {
+  position: absolute;
+  inset: 0;
+  opacity: var(--bg-grain);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.2 0 0 0 0 0.18 0 0 0 0 0.16 0 0 0 1.4 -0.2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+}
+
+:root[data-theme='dark'] .backdrop-grain {
+  mix-blend-mode: screen;
+  filter: invert(1);
+}

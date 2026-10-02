@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "stellaria-backend"
+version = "0.1.0"
+description = "Stellaria desktop studio backend (FastAPI) around the DDSP-SVC engine"
+requires-python = ">=3.10"
+# Runtime dependencies are pinned in requirements-runtime.txt (installed by the shell).
+dependencies = []
+
+[tool.setuptools.packages.find]
+include = ["stellaria_backend*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "e2e: end-to-end test with the real DDSP-SVC engine (slow, needs torch + pretrained models)",
+]
+addopts = "-m 'not e2e'"
+timeout = 300
+filterwarnings = ["ignore:Using `httpx` with `starlette.testclient` is deprecated"]

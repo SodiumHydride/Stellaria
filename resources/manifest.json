@@ -1,0 +1,230 @@
+{
+  "version": 1,
+  "runtime": {
+    "id": "rt-2026.10-py311-torch291",
+    "python": "3.11",
+    "torch": "2.9.1",
+    "torchaudio": "2.9.1",
+    "requirements": "backend/requirements-runtime.txt",
+    "pythonInstallMirrors": [
+      { "id": "github", "region": "global", "url": null },
+      { "id": "npmmirror", "region": "cn", "url": "https://registry.npmmirror.com/-/binary/python-build-standalone" }
+    ],
+    "pypi": [
+      { "id": "pypi", "region": "global", "url": "https://pypi.org/simple" },
+      { "id": "tuna", "region": "cn", "url": "https://pypi.tuna.tsinghua.edu.cn/simple" },
+      { "id": "aliyun", "region": "cn", "url": "https://mirrors.aliyun.com/pypi/simple" },
+      { "id": "ustc", "region": "cn", "url": "https://mirrors.ustc.edu.cn/pypi/simple" }
+    ],
+    "variants": {
+      "cu128": {
+        "torchSources": [
+          { "id": "pytorch", "region": "global", "type": "index", "url": "https://download.pytorch.org/whl/cu128" },
+          { "id": "aliyun", "region": "cn", "type": "find-links", "url": "https://mirrors.aliyun.com/pytorch-wheels/cu128/" },
+          { "id": "sjtu", "region": "cn", "type": "index", "url": "https://mirror.sjtu.edu.cn/pytorch-wheels/cu128" }
+        ],
+        "extraPackages": { "windows": ["triton-windows>=3.5,<3.6"], "linux": [], "macos": [] },
+        "fusedKernels": true
+      },
+      "cu126": {
+        "torchSources": [
+          { "id": "pytorch", "region": "global", "type": "index", "url": "https://download.pytorch.org/whl/cu126" },
+          { "id": "aliyun", "region": "cn", "type": "find-links", "url": "https://mirrors.aliyun.com/pytorch-wheels/cu126/" },
+          { "id": "sjtu", "region": "cn", "type": "index", "url": "https://mirror.sjtu.edu.cn/pytorch-wheels/cu126" }
+        ],
+        "extraPackages": { "windows": [], "linux": [], "macos": [] },
+        "fusedKernels": false
+      },
+      "cpu": {
+        "torchSources": [
+          { "id": "pytorch", "region": "global", "type": "index", "url": "https://download.pytorch.org/whl/cpu" },
+          { "id": "aliyun", "region": "cn", "type": "find-links", "url": "https://mirrors.aliyun.com/pytorch-wheels/cpu/" },
+          { "id": "sjtu", "region": "cn", "type": "index", "url": "https://mirror.sjtu.edu.cn/pytorch-wheels/cpu" }
+        ],
+        "extraPackages": { "windows": [], "linux": [], "macos": [] },
+        "fusedKernels": false
+      },
+      "mac": {
+        "torchSources": [
+          { "id": "pypi", "region": "any", "type": "pypi", "url": null }
+        ],
+        "extraPackages": { "windows": [], "linux": [], "macos": [] },
+        "fusedKernels": false
+      }
+    }
+  },
+  "resources": [
+    {
+      "id": "contentvec",
+      "kind": "model",
+      "required": true,
+      "name": { "zh-CN": "ContentVec 内容编码器", "en": "ContentVec content encoder" },
+      "description": { "zh-CN": "把歌声转成与音色无关的内容特征，训练和转换都需要。", "en": "Turns singing into speaker-independent content features. Needed for training and conversion." },
+      "license": "MIT",
+      "homepage": "https://github.com/auspicious3000/contentvec",
+      "size": null,
+      "sha256": null,
+      "install": { "type": "file", "dest": "contentvec/pytorch_model.bin" },
+      "sources": [
+        { "id": "huggingface", "region": "global", "url": "https://huggingface.co/lengyue233/content-vec-best/resolve/main/pytorch_model.bin" },
+        { "id": "hf-mirror", "region": "cn", "url": "https://hf-mirror.com/lengyue233/content-vec-best/resolve/main/pytorch_model.bin" }
+      ]
+    },
+    {
+      "id": "rmvpe",
+      "kind": "model",
+      "required": true,
+      "name": { "zh-CN": "RMVPE 音高提取器", "en": "RMVPE pitch extractor" },
+      "description": { "zh-CN": "从歌声里准确地提取音高曲线。", "en": "Extracts accurate pitch curves from singing." },
+      "license": "MIT",
+      "homepage": "https://github.com/yxlllc/RMVPE",
+      "size": 340638958,
+      "sha256": "54ae40d9c066d998b94574f6ef0deea19ed1565bd655b3f0d9b1ad612fb5309c",
+      "install": { "type": "zip", "dest": "rmvpe", "files": { "model.pt": "model.pt" } },
+      "sources": [
+        { "id": "github", "region": "global", "url": "https://github.com/yxlllc/RMVPE/releases/download/230917/rmvpe.zip" },
+        { "id": "ghfast", "region": "cn", "url": "https://ghfast.top/https://github.com/yxlllc/RMVPE/releases/download/230917/rmvpe.zip" },
+        { "id": "gh-proxy", "region": "cn", "url": "https://gh-proxy.com/https://github.com/yxlllc/RMVPE/releases/download/230917/rmvpe.zip" }
+      ]
+    },
+    {
+      "id": "nsf_hifigan",
+      "kind": "model",
+      "required": true,
+      "name": { "zh-CN": "NSF-HiFiGAN 声码器", "en": "NSF-HiFiGAN vocoder" },
+      "description": { "zh-CN": "把频谱还原成声音。由 OpenVPI 提供，CC BY-NC-SA 4.0 许可（禁止商用）。", "en": "Turns spectrograms back into audio. By OpenVPI, CC BY-NC-SA 4.0 (non-commercial)." },
+      "license": "CC-BY-NC-SA-4.0",
+      "homepage": "https://openvpi.github.io/vocoders/",
+      "size": 52675337,
+      "sha256": "9d98ba73727f2abb75172cf8249d75182237e8472fc3b6ed09c721ae8b0e83c6",
+      "install": {
+        "type": "zip",
+        "dest": "nsf_hifigan",
+        "files": {
+          "pc_nsf_hifigan_44.1k_hop512_128bin_2025.02/model.ckpt": "model.ckpt",
+          "pc_nsf_hifigan_44.1k_hop512_128bin_2025.02/config.json": "config.json",
+          "pc_nsf_hifigan_44.1k_hop512_128bin_2025.02/NOTICE.txt": "NOTICE.txt",
+          "pc_nsf_hifigan_44.1k_hop512_128bin_2025.02/NOTICE.zh-CN.txt": "NOTICE.zh-CN.txt",
+          "pc_nsf_hifigan_44.1k_hop512_128bin_2025.02/STATEMENTS.txt": "STATEMENTS.txt"
+        }
+      },
+      "sources": [
+        { "id": "github", "region": "global", "url": "https://github.com/openvpi/vocoders/releases/download/pc-nsf-hifigan-44.1k-hop512-128bin-2025.02/pc_nsf_hifigan_44.1k_hop512_128bin_2025.02.zip" },
+        { "id": "ghfast", "region": "cn", "url": "https://ghfast.top/https://github.com/openvpi/vocoders/releases/download/pc-nsf-hifigan-44.1k-hop512-128bin-2025.02/pc_nsf_hifigan_44.1k_hop512_128bin_2025.02.zip" },
+        { "id": "gh-proxy", "region": "cn", "url": "https://gh-proxy.com/https://github.com/openvpi/vocoders/releases/download/pc-nsf-hifigan-44.1k-hop512-128bin-2025.02/pc_nsf_hifigan_44.1k_hop512_128bin_2025.02.zip" }
+      ]
+    },
+    {
+      "id": "hubertsoft",
+      "kind": "model",
+      "required": false,
+      "name": { "zh-CN": "HuBERT-Soft 编码器（可选）", "en": "HuBERT-Soft encoder (optional)" },
+      "description": { "zh-CN": "ContentVec 的轻量替代，显存更小，效果略逊。", "en": "A lighter alternative to ContentVec: less VRAM, slightly lower quality." },
+      "license": "MIT",
+      "homepage": "https://github.com/bshall/hubert",
+      "size": 378435957,
+      "sha256": "e82e7d079df05fe3aa535f6f7d42d309bdae1d2a53324e2b2386c56721f4f649",
+      "install": { "type": "file", "dest": "hubertsoft/hubert-soft-0d54a1f4.pt" },
+      "sources": [
+        { "id": "github", "region": "global", "url": "https://github.com/bshall/hubert/releases/download/v0.1/hubert-soft-0d54a1f4.pt" },
+        { "id": "ghfast", "region": "cn", "url": "https://ghfast.top/https://github.com/bshall/hubert/releases/download/v0.1/hubert-soft-0d54a1f4.pt" },
+        { "id": "gh-proxy", "region": "cn", "url": "https://gh-proxy.com/https://github.com/bshall/hubert/releases/download/v0.1/hubert-soft-0d54a1f4.pt" }
+      ]
+    },
+    {
+      "id": "separator",
+      "kind": "addon",
+      "required": false,
+      "name": { "zh-CN": "人声分离", "en": "Vocal separation" },
+      "description": { "zh-CN": "从整首歌里分离人声和伴奏（Demucs）。素材整理时去伴奏、创作时拆分歌曲都会用到，也让体检能检查伴奏残留。装好后还能使用效果更好的 Roformer 人声模型。", "en": "Splits songs into vocals and accompaniment (Demucs). Used to clean material, split songs for creation, and to detect leftover music in health checks. Also runs the better Roformer vocal models." },
+      "license": "MIT",
+      "homepage": "https://github.com/adefossez/demucs",
+      "size": 90000000,
+      "sha256": null,
+      "install": { "type": "addon", "packages": ["demucs==4.1.0", "einops==0.8.2", "rotary-embedding-torch==0.9.1"], "model": "htdemucs" },
+      "sources": []
+    },
+    {
+      "id": "mel_roformer_kim",
+      "kind": "model",
+      "required": false,
+      "name": { "zh-CN": "Mel-Band-Roformer 人声模型（Kim）", "en": "Mel-Band-Roformer vocal model (Kim)" },
+      "description": { "zh-CN": "人声分离比 Demucs 干净得多（人声 SDR 10.98），整理训练素材时推荐；速度约为 BS-Roformer 的两倍。需要「人声分离」扩展。作者未声明这份权重的许可。", "en": "Much cleaner vocal separation than Demucs (vocals SDR 10.98), recommended for cleaning training material; about twice as fast as BS-Roformer. Needs the Vocal separation add-on. Its author has not declared a licence for these weights." },
+      "license": "Weights: no licence declared by the author; code: MIT (Music-Source-Separation-Training)",
+      "homepage": "https://huggingface.co/KimberleyJSN/melbandroformer",
+      "size": null,
+      "sha256": null,
+      "install": { "type": "file", "dest": "separation/mel_roformer_kim/MelBandRoformer.ckpt" },
+      "separation": { "arch": "mel_band_roformer", "config": "mel_roformer_kim.yaml", "sdr": 10.98, "aliases": ["MelBandRoformer_kim.ckpt"] },
+      "sources": [
+        { "id": "huggingface", "region": "global", "url": "https://huggingface.co/KimberleyJSN/melbandroformer/resolve/main/MelBandRoformer.ckpt" },
+        { "id": "hf-mirror", "region": "cn", "url": "https://hf-mirror.com/KimberleyJSN/melbandroformer/resolve/main/MelBandRoformer.ckpt" }
+      ]
+    },
+    {
+      "id": "bs_roformer_viperx",
+      "kind": "model",
+      "required": false,
+      "name": { "zh-CN": "BS-Roformer 人声模型（viperx）", "en": "BS-Roformer vocal model (viperx)" },
+      "description": { "zh-CN": "人声分离比 Demucs 干净得多（人声 SDR 10.87），整理训练素材时推荐。需要「人声分离」扩展。作者未声明这份权重的许可。", "en": "Much cleaner vocal separation than Demucs (vocals SDR 10.87), recommended for cleaning training material. Needs the Vocal separation add-on. Its author has not declared a licence for these weights." },
+      "license": "Weights: no licence declared by the author; code: MIT (Music-Source-Separation-Training)",
+      "homepage": "https://github.com/ZFTurbo/Music-Source-Separation-Training",
+      "size": 639331213,
+      "sha256": null,
+      "install": { "type": "file", "dest": "separation/bs_roformer_viperx/model_bs_roformer_ep_317_sdr_12.9755.ckpt" },
+      "separation": { "arch": "bs_roformer", "config": "bs_roformer_viperx.yaml", "sdr": 10.87 },
+      "sources": [
+        { "id": "github", "region": "global", "url": "https://github.com/TRvlvr/model_repo/releases/download/all_public_uvr_models/model_bs_roformer_ep_317_sdr_12.9755.ckpt" },
+        { "id": "ghfast", "region": "cn", "url": "https://ghfast.top/https://github.com/TRvlvr/model_repo/releases/download/all_public_uvr_models/model_bs_roformer_ep_317_sdr_12.9755.ckpt" },
+        { "id": "gh-proxy", "region": "cn", "url": "https://gh-proxy.com/https://github.com/TRvlvr/model_repo/releases/download/all_public_uvr_models/model_bs_roformer_ep_317_sdr_12.9755.ckpt" }
+      ]
+    },
+    {
+      "id": "dereverb_mbr_anvuew",
+      "kind": "model",
+      "required": false,
+      "name": { "zh-CN": "去混响模型（anvuew）", "en": "Dereverb model (anvuew)" },
+      "description": { "zh-CN": "去掉人声里的混响，留下干声（SDR 19.17），整理训练素材时推荐。需要「人声分离」扩展。作者未声明这份权重的许可。", "en": "Removes reverb from vocals and keeps the dry voice (SDR 19.17), recommended for cleaning training material. Needs the Vocal separation add-on. Its author has not declared a licence for these weights." },
+      "license": "Weights: no licence declared by the author; code: MIT (Music-Source-Separation-Training)",
+      "homepage": "https://huggingface.co/anvuew/dereverb_mel_band_roformer",
+      "size": 913107578,
+      "sha256": "9262877b87e9ebb0fb808a456b0a411fa677f5df31c8383c1254af531c078970",
+      "install": { "type": "file", "dest": "cleanup/dereverb_mbr_anvuew/dereverb_mel_band_roformer_anvuew_sdr_19.1729.ckpt" },
+      "cleanup": { "arch": "mel_band_roformer", "config": "dereverb_mbr_anvuew.yaml", "kind": "dereverb", "target": "noreverb", "sdr": 19.17 },
+      "sources": [
+        { "id": "huggingface", "region": "global", "url": "https://huggingface.co/Sucial/MSST-WebUI/resolve/main/All_Models/single_stem_models/dereverb_mel_band_roformer_anvuew_sdr_19.1729.ckpt" },
+        { "id": "hf-mirror", "region": "cn", "url": "https://hf-mirror.com/Sucial/MSST-WebUI/resolve/main/All_Models/single_stem_models/dereverb_mel_band_roformer_anvuew_sdr_19.1729.ckpt" }
+      ]
+    },
+    {
+      "id": "dereverb_echo_mbr_fused",
+      "kind": "model",
+      "required": false,
+      "name": { "zh-CN": "去混响和回声模型（融合版）", "en": "Dereverb and de-echo model (fused)" },
+      "description": { "zh-CN": "同时去掉人声里的混响和回声，留下干声；大小只有 anvuew 去混响模型的一半，也更快。需要「人声分离」扩展。作者未声明这份权重的许可。", "en": "Removes both reverb and echo from vocals and keeps the dry voice; half the size of the anvuew dereverb model, and faster. Needs the Vocal separation add-on. Its authors have not declared a licence for these weights." },
+      "license": "Weights: no licence declared by the authors; code: MIT (Music-Source-Separation-Training)",
+      "homepage": "https://huggingface.co/Sucial/Dereverb-Echo_Mel_Band_Roformer",
+      "size": 455776577,
+      "sha256": "1596b1063238f487d54a0510a8c92cb28c000c803a271dd618ac49efc99ef3f7",
+      "install": { "type": "file", "dest": "cleanup/dereverb_echo_mbr_fused/dereverb_echo_mbr_fused_0.5_v2_0.25_big_0.25_super.ckpt" },
+      "cleanup": { "arch": "mel_band_roformer", "config": "dereverb_echo_mbr_fused.yaml", "kind": "dereverb_echo", "target": "dry" },
+      "sources": [
+        { "id": "huggingface", "region": "global", "url": "https://huggingface.co/Sucial/MSST-WebUI/resolve/main/All_Models/single_stem_models/dereverb_echo_mbr_fused_0.5_v2_0.25_big_0.25_super.ckpt" },
+        { "id": "hf-mirror", "region": "cn", "url": "https://hf-mirror.com/Sucial/MSST-WebUI/resolve/main/All_Models/single_stem_models/dereverb_echo_mbr_fused_0.5_v2_0.25_big_0.25_super.ckpt" }
+      ]
+    },
+    {
+      "id": "vsthost",
+      "kind": "addon",
+      "required": false,
+      "name": { "zh-CN": "VST3 / AU 插件宿主", "en": "VST3 / AU plugin host" },
+      "description": { "zh-CN": "在效果链里使用电脑上已安装的 VST3（以及 macOS 上的 Audio Unit）效果器，比如 Pro-Q 3、Valhalla，并能打开它们自己的窗口调参数（Spotify pedalboard，GPL-3.0）。不装也能用内置效果。", "en": "Use the VST3 (and, on macOS, Audio Unit) effects installed on this computer in effect chains — e.g. Pro-Q 3 or Valhalla — and open their own windows to adjust them (Spotify pedalboard, GPL-3.0). Built-in effects work without it." },
+      "license": "GPL-3.0",
+      "homepage": "https://github.com/spotify/pedalboard",
+      "size": 5000000,
+      "sha256": null,
+      "install": { "type": "addon", "packages": ["pedalboard==0.9.25"] },
+      "sources": []
+    }
+  ]
+}

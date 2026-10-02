@@ -1,0 +1,118 @@
+.palette-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-palette);
+  display: flex;
+  justify-content: center;
+  padding-top: 14vh;
+  background: var(--overlay);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  animation: fade-in var(--t-fast) var(--ease);
+}
+
+/* the scrim's light blur follows the glass setting like --glass-blur does */
+:root[data-glass='off'] .palette-overlay,
+:root[data-low-power='on'] .palette-overlay {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  :root .palette-overlay {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+
+.palette {
+  width: min(620px, calc(100vw - 48px));
+  max-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: var(--r-xl);
+  animation: pop-in var(--t-med) var(--ease);
+}
+
+.palette-input {
+  height: 56px;
+  padding: 0 22px;
+  border: none;
+  border-bottom: 1px solid var(--hairline);
+  background: transparent;
+  font-size: var(--fs-lg);
+  color: var(--text-1);
+}
+
+.palette-input::placeholder {
+  color: var(--text-4);
+}
+
+.palette-list {
+  overflow: auto;
+  padding: var(--s-1-5) var(--s-2) var(--s-2-5);
+}
+
+.palette-empty {
+  padding: var(--s-6);
+  text-align: center;
+  color: var(--text-3);
+}
+
+.palette [cmdk-group-heading] {
+  padding: var(--s-2-5) var(--s-3) var(--s-1);
+  font-size: var(--fs-xs);
+  font-weight: 650;
+  letter-spacing: 0.06em;
+  color: var(--text-3);
+}
+
+.palette [cmdk-item] {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2-5);
+  height: 40px;
+  padding: 0 var(--s-3);
+  border-radius: var(--r-md);
+  color: var(--text-1);
+  cursor: pointer;
+}
+
+.palette [cmdk-item] svg {
+  width: 16px;
+  height: 16px;
+  color: var(--text-2);
+}
+
+.palette [cmdk-item][data-selected='true'] {
+  background: var(--surface-active);
+}
+
+.palette-meta {
+  margin-left: auto;
+  font-size: var(--fs-xs);
+  color: var(--text-3);
+}
+
+.palette-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin: 0 3px;
+  box-shadow: 0 0 8px currentColor;
+}
+
+.shortcut-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-1) var(--s-6);
+}
+
+.shortcut-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 34px;
+  border-bottom: 1px solid var(--hairline);
+}

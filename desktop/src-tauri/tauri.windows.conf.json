@@ -1,0 +1,48 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "app": {
+    "windows": [
+      {
+        "label": "main",
+        "create": false,
+        "title": "星籁 Stellaria",
+        "width": 1360,
+        "height": 860,
+        "minWidth": 1100,
+        "minHeight": 700,
+        "center": true,
+        "resizable": true,
+        "visible": false,
+        "backgroundColor": "#e9e5df",
+        "theme": "Dark",
+        "dragDropEnabled": true,
+        "decorations": false,
+        "shadow": true
+      }
+    ]
+  },
+  "bundle": {
+    "targets": [
+      "nsis"
+    ],
+    "windows": {
+      "digestAlgorithm": "sha256",
+      "timestampUrl": "http://timestamp.digicert.com",
+      "webviewInstallMode": {
+        "type": "downloadBootstrapper",
+        "silent": true
+      },
+      "nsis": {
+        "installMode": "currentUser",
+        "languages": [
+          "SimpChinese",
+          "English"
+        ],
+        "displayLanguageSelector": false,
+        "installerIcon": "icons/icon.ico",
+        "startMenuFolder": "Stellaria",
+        "compression": "lzma"
+      }
+    }
+  }
+}

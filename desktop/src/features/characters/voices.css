@@ -1,0 +1,162 @@
+.voices-space {
+  display: flex;
+  gap: var(--s-3-5);
+  height: 100%;
+  padding: var(--s-1) var(--s-3-5) var(--s-3-5);
+}
+
+.voices-main {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+}
+
+/* ---------- sidebar ---------- */
+.voices-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2-5);
+  width: 268px;
+  flex: none;
+  padding: var(--s-3);
+}
+
+.sb-head {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+}
+
+.sb-title {
+  padding-left: var(--s-1);
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  font-weight: 650;
+}
+
+.sb-count {
+  font-size: var(--fs-xs);
+  color: var(--text-3);
+}
+
+.sb-new {
+  width: 30px;
+  padding: 0;
+  --btn-h: 30px;
+}
+
+.sb-search .input {
+  height: 32px;
+}
+
+.voices-sidebar .segmented {
+  width: 100%;
+}
+
+.voices-sidebar .segmented button {
+  flex: 1;
+  justify-content: center;
+  padding: 0 var(--s-1);
+}
+
+.sb-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.sb-list {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  margin: 0 -6px;
+  padding: 0 var(--s-1-5);
+}
+
+.sb-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--s-2-5);
+  width: 100%;
+  padding: var(--s-2);
+  border-radius: var(--r-md);
+  text-align: left;
+  overflow: hidden;
+  transition: background var(--t-fast);
+}
+
+.sb-item:hover {
+  background: var(--surface-hover);
+}
+
+.sb-item.selected {
+  background: var(--surface-active);
+  box-shadow: inset 0 0 0 1px rgb(var(--accent-rgb) / 0.15);
+}
+
+.sb-item-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+}
+
+.sb-item-name {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 620;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sb-pin {
+  width: 11px;
+  height: 11px;
+  color: var(--accent);
+  flex: none;
+}
+
+.sb-item-sub {
+  font-size: var(--fs-xs);
+  color: var(--text-3);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sb-item-progress {
+  position: absolute;
+  left: 8px;
+  bottom: 3px;
+  height: 2px;
+  max-width: calc(100% - 16px);
+  border-radius: 2px;
+  background: var(--fill);
+}
+
+.sb-empty {
+  padding: var(--s-5) var(--s-2);
+  color: var(--text-3);
+  text-align: center;
+  font-size: var(--fs-sm);
+}
+
+.sb-archived {
+  align-self: flex-start;
+}
+
+.voices-landing {
+  display: grid;
+  place-items: center;
+  height: 100%;
+}
+
+.imp-paths {
+  font-size: var(--fs-xs);
+  word-break: break-all;
+}

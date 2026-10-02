@@ -1,0 +1,230 @@
+/* Export node panel (inspector column) */
+
+.exp {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+  min-width: 0;
+}
+
+.exp-sec {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+}
+
+.exp-sec-head {
+  display: flex;
+  align-items: center;
+  min-height: 22px;
+}
+
+.exp-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-2-5);
+  min-height: 32px;
+}
+
+.exp-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-1-5);
+}
+
+.exp-label {
+  min-width: 0;
+  font-size: var(--fs-sm);
+  font-weight: 560;
+  color: var(--text-2);
+}
+
+.exp-unit {
+  margin-left: var(--s-0-5);
+  font-weight: 500;
+  color: var(--text-3);
+}
+
+.exp-seg-full .segmented {
+  display: flex;
+}
+
+.exp-seg-full .segmented button {
+  flex: 1;
+  justify-content: center;
+}
+
+.exp-row .segmented button {
+  padding: 0 var(--s-2-5);
+}
+
+.exp-input {
+  height: 30px;
+  font-size: var(--fs-sm);
+}
+
+.exp-folder {
+  display: flex;
+  align-items: center;
+  gap: var(--s-1);
+}
+
+.exp-folder-pick {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+  gap: var(--s-2);
+  height: 30px;
+  padding: 0 var(--s-2-5);
+  border-radius: var(--r-md);
+  background: var(--well);
+  border: 1px solid var(--glass-border);
+  text-align: left;
+  transition: border-color var(--t-fast), background var(--t-fast);
+}
+
+.exp-folder-pick:hover {
+  border-color: var(--glass-border-strong);
+}
+
+.exp-folder-pick svg {
+  flex: none;
+  width: 14px;
+  height: 14px;
+  color: var(--text-3);
+}
+
+.exp-folder-path {
+  min-width: 0;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--text-1);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.exp-folder-path.is-default {
+  font-family: var(--font);
+  font-size: var(--fs-sm);
+  color: var(--text-3);
+}
+
+.exp-tokens {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-1);
+}
+
+.exp-token {
+  height: 22px;
+  padding: 0 var(--s-2);
+  border-radius: var(--r-pill);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: var(--text-2);
+  background: var(--surface-2);
+  border: 1px solid var(--hairline);
+  transition: background var(--t-fast), color var(--t-fast), border-color var(--t-fast);
+}
+
+.exp-token::before {
+  content: '+';
+  margin-right: 3px;
+  color: var(--text-4);
+}
+
+.exp-token:hover {
+  background: var(--accent-soft);
+  border-color: color-mix(in srgb, var(--accent) 28%, transparent);
+  color: var(--accent-strong);
+}
+
+.exp-example {
+  display: flex;
+  align-items: center;
+  gap: var(--s-1-5);
+  min-width: 0;
+  padding: var(--s-1-5) var(--s-2);
+  border-radius: var(--r-sm);
+  background: var(--well-strong);
+  font-size: var(--fs-xs);
+  color: var(--text-2);
+}
+
+.exp-example svg {
+  flex: none;
+  width: 13px;
+  height: 13px;
+  color: var(--text-4);
+}
+
+.exp-example span {
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.exp-lufs {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--s-2-5);
+  margin-top: -4px;
+}
+
+.exp-lufs-val {
+  min-width: 64px;
+  text-align: right;
+  font-size: var(--fs-sm);
+  color: var(--text-2);
+}
+
+.exp-tags {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-1-5);
+  margin-top: -2px;
+}
+
+.exp-result {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  padding: var(--s-2-5) var(--s-3) var(--s-3);
+  border-radius: var(--r-md);
+  background: var(--good-soft);
+  border: 1px solid color-mix(in srgb, var(--good) 22%, transparent);
+}
+
+.exp-result-head {
+  display: flex;
+  align-items: center;
+  gap: var(--s-1-5);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--good);
+}
+
+.exp-result-head svg {
+  width: 15px;
+  height: 15px;
+}
+
+.exp-result-path {
+  font-size: var(--fs-xs);
+  line-height: 1.5;
+  color: var(--text-2);
+  word-break: break-all;
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+.exp-result-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-1-5);
+}

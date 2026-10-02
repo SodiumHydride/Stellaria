@@ -1,0 +1,104 @@
+.mchart {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-1-5);
+  padding: var(--s-3-5) var(--s-3-5) var(--s-2-5);
+  border-radius: var(--r-lg);
+  min-width: 0;
+}
+
+.mchart-head {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  min-height: 26px;
+}
+
+.mchart-title {
+  font-weight: 650;
+}
+
+.mchart-title.has-hint {
+  cursor: help;
+  text-decoration: underline dotted var(--text-4);
+  text-underline-offset: 4px;
+}
+
+.mchart-legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-1) var(--s-3-5);
+  min-height: 18px;
+  font-size: var(--fs-xs);
+}
+
+.mchart-step {
+  color: var(--text-3);
+}
+
+.mchart-key {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-1-5);
+  color: var(--text-1);
+}
+
+.mchart-key i {
+  width: 12px;
+  height: 3px;
+  border-radius: 2px;
+}
+
+.mchart-plot {
+  position: relative;
+  min-width: 0;
+}
+
+.mchart-empty {
+  display: grid;
+  place-items: center;
+  color: var(--text-3);
+  font-size: var(--fs-sm);
+  border-radius: var(--r-md);
+  background: repeating-linear-gradient(0deg, transparent 0 37px, rgb(var(--ink) / 0.04) 37px 38px);
+}
+
+.mchart-table {
+  overflow: auto;
+  font-size: var(--fs-xs);
+}
+
+.mchart-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.mchart-table th,
+.mchart-table td {
+  padding: var(--s-1) var(--s-2);
+  text-align: right;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.mchart-table th {
+  position: sticky;
+  top: 0;
+  background: var(--glass-solid);
+  color: var(--text-3);
+  font-weight: 600;
+}
+
+/* uPlot dark adjustments */
+.mchart .u-over,
+.mchart .u-under {
+  cursor: crosshair;
+}
+
+.mchart .u-cursor-x {
+  border-right: 1px dashed rgb(var(--ink) / 0.35) !important;
+}
+
+.mchart .u-select {
+  background: rgb(var(--accent-rgb) / 0.12);
+}

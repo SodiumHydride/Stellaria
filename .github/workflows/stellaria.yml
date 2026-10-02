@@ -1,0 +1,255 @@
+# 星籁 Stellaria — backend tests, frontend build, shell lint, and Windows/macOS installers.
+#
+# Code signing is optional and only happens when the secrets exist:
+#
+#   macOS (Developer ID + notarization)
+#     APPLE_CERTIFICATE           base64 of the "Developer ID Application" .p12
+#     APPLE_CERTIFICATE_PASSWORD  password of that .p12
+#     APPLE_SIGNING_IDENTITY      e.g. "Developer ID Application: Name (TEAMID)"
+#     APPLE_ID, APPLE_PASSWORD, APPLE_TEAM_ID
+#                                 Apple ID, app-specific password and team for notarization
+#     Without them the app is ad-hoc signed (users open it with right-click → Open).
+#
+#   Windows (Authenticode)
+#     WINDOWS_CERTIFICATE           base64 of the code-signing .pfx
+#     WINDOWS_CERTIFICATE_PASSWORD  password of that .pfx
+#     Without them the installer is unsigned (SmartScreen will warn).
+
+name: Stellaria
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: stellaria-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  backend:
+    name: Backend tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check requirement files
+        run: |
+          for f in requirements-runtime.txt requirements-dev.txt; do
+            if [ ! -f "$f" ]; then
+              echo "::error file=backend/$f::backend/$f is missing — the backend cannot be installed"
+              exit 1
+            fi
+          done
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: backend/requirements*.txt
+
+      - name: Install CPU torch (keeps pip from pulling the multi-GB CUDA build)
+        run: |
+          TORCH=$(python -c "import json; print(json.load(open('../resources/manifest.json'))['runtime']['torch'])")
+          AUDIO=$(python -c "import json; print(json.load(open('../resources/manifest.json'))['runtime']['torchaudio'])")
+          python -m pip install --upgrade pip
+          pip install "torch==${TORCH}+cpu" "torchaudio==${AUDIO}+cpu" --index-url https://download.pytorch.org/whl/cpu
+
+      - name: Install backend requirements
+        run: pip install -r requirements-dev.txt
+
+      - name: pytest (without e2e)
+        run: python -m pytest -m "not e2e" -q
+
+  frontend:
+    name: Frontend typecheck + build
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: desktop
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: desktop/package-lock.json
+      - run: npm ci
+      - name: Module names differ in more than case (Windows and macOS file systems ignore it)
+        run: |
+          dupes=$(git ls-files src | grep -E '\.(tsx?|jsx?|json)$' | sed -E 's/\.[^./]+$//' | tr '[:upper:]' '[:lower:]' | sort | uniq -d)
+          if [ -n "$dupes" ]; then echo "::error::modules that only differ in case: $dupes"; exit 1; fi
+      - run: npm run typecheck
+      - run: npm run build
+
+  shell-check:
+    name: Shell (Rust) check + clippy + tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    defaults:
+      run:
+        working-directory: desktop/src-tauri
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install WebKitGTK and friends
+        working-directory: .
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            libwebkit2gtk-4.1-dev libayatana-appindicator3-dev librsvg2-dev \
+            libssl-dev libxdo-dev build-essential pkg-config
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy, rustfmt
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: desktop/src-tauri -> target
+
+      - run: cargo fmt --check
+      - run: cargo check --all-targets
+      - run: cargo clippy --all-targets -- -D warnings
+      - run: cargo test
+
+  bundle:
+    name: Installer (${{ matrix.name }})
+    needs: [backend, frontend, shell-check]
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: Windows x64
+            os: windows-latest
+            target: x86_64-pc-windows-msvc
+            bundles: nsis
+            artifacts: desktop/src-tauri/target/x86_64-pc-windows-msvc/release/bundle/nsis/*.exe
+          - name: macOS Apple Silicon
+            os: macos-latest
+            target: aarch64-apple-darwin
+            bundles: app,dmg
+            artifacts: desktop/src-tauri/target/aarch64-apple-darwin/release/bundle/dmg/*.dmg
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
+    env:
+      # `secrets` cannot be used in step conditions; these flags can.
+      HAS_APPLE_CERT: ${{ secrets.APPLE_CERTIFICATE != '' }}
+      HAS_APPLE_NOTARY: ${{ secrets.APPLE_ID != '' }}
+      HAS_WINDOWS_CERT: ${{ secrets.WINDOWS_CERTIFICATE != '' }}
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: desktop/package-lock.json
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: desktop/src-tauri -> target
+          key: ${{ matrix.target }}
+
+      - name: npm ci
+        working-directory: desktop
+        run: npm ci
+
+      - name: Stage engine, backend, manifest and uv
+        run: node scripts/stage-bundle.mjs --target ${{ matrix.target }}
+
+      # ---------------------------------------------------------------- macOS signing
+      - name: Import the Developer ID certificate
+        if: runner.os == 'macOS' && env.HAS_APPLE_CERT == 'true'
+        env:
+          APPLE_CERTIFICATE: ${{ secrets.APPLE_CERTIFICATE }}
+          APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
+          APPLE_SIGNING_IDENTITY: ${{ secrets.APPLE_SIGNING_IDENTITY }}
+        run: |
+          KEYCHAIN="$RUNNER_TEMP/stellaria.keychain-db"
+          KEYCHAIN_PASSWORD="$(openssl rand -hex 16)"
+          echo "$APPLE_CERTIFICATE" | base64 --decode > "$RUNNER_TEMP/cert.p12"
+          security create-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN"
+          security set-keychain-settings -lut 21600 "$KEYCHAIN"
+          security unlock-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN"
+          security import "$RUNNER_TEMP/cert.p12" -P "$APPLE_CERTIFICATE_PASSWORD" -A -t cert -f pkcs12 -k "$KEYCHAIN"
+          security set-key-partition-list -S apple-tool:,apple: -k "$KEYCHAIN_PASSWORD" "$KEYCHAIN"
+          security list-keychains -d user -s "$KEYCHAIN" $(security list-keychains -d user | tr -d '"')
+          rm "$RUNNER_TEMP/cert.p12"
+          echo "APPLE_SIGNING_IDENTITY=$APPLE_SIGNING_IDENTITY" >> "$GITHUB_ENV"
+
+      - name: Notarization credentials
+        if: runner.os == 'macOS' && env.HAS_APPLE_NOTARY == 'true'
+        env:
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+        run: |
+          {
+            echo "APPLE_ID=$APPLE_ID"
+            echo "APPLE_PASSWORD=$APPLE_PASSWORD"
+            echo "APPLE_TEAM_ID=$APPLE_TEAM_ID"
+          } >> "$GITHUB_ENV"
+
+      - name: Sign the bundled uv (notarization requires every Mach-O to be signed)
+        if: runner.os == 'macOS'
+        run: |
+          IDENTITY="${APPLE_SIGNING_IDENTITY:--}"
+          if [ "$IDENTITY" = "-" ]; then
+            echo "No Developer ID: ad-hoc signing"
+            echo "APPLE_SIGNING_IDENTITY=-" >> "$GITHUB_ENV"
+            codesign --force --sign - desktop/src-tauri/resources/uv/uv
+          else
+            codesign --force --options runtime --timestamp --sign "$IDENTITY" desktop/src-tauri/resources/uv/uv
+          fi
+          codesign --verify --verbose desktop/src-tauri/resources/uv/uv
+
+      # ---------------------------------------------------------------- Windows signing
+      - name: Import the Authenticode certificate
+        if: runner.os == 'Windows' && env.HAS_WINDOWS_CERT == 'true'
+        shell: pwsh
+        env:
+          WINDOWS_CERTIFICATE: ${{ secrets.WINDOWS_CERTIFICATE }}
+          WINDOWS_CERTIFICATE_PASSWORD: ${{ secrets.WINDOWS_CERTIFICATE_PASSWORD }}
+        run: |
+          $pfx = Join-Path $env:RUNNER_TEMP 'cert.pfx'
+          [IO.File]::WriteAllBytes($pfx, [Convert]::FromBase64String($env:WINDOWS_CERTIFICATE))
+          $password = ConvertTo-SecureString -String $env:WINDOWS_CERTIFICATE_PASSWORD -Force -AsPlainText
+          $cert = Import-PfxCertificate -FilePath $pfx -CertStoreLocation Cert:\CurrentUser\My -Password $password
+          Remove-Item $pfx
+          $config = @{ bundle = @{ windows = @{ certificateThumbprint = $cert.Thumbprint } } } | ConvertTo-Json -Depth 5
+          $path = Join-Path $env:RUNNER_TEMP 'tauri.signing.json'
+          Set-Content -Path $path -Value $config -Encoding utf8
+          "STELLARIA_WINDOWS_SIGNING_CONFIG=$path" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+
+      # ---------------------------------------------------------------- build
+      - name: tauri build
+        working-directory: desktop
+        run: |
+          ARGS=(--target "${{ matrix.target }}" --bundles "${{ matrix.bundles }}" --ci)
+          if [ -n "${STELLARIA_WINDOWS_SIGNING_CONFIG:-}" ]; then ARGS+=(--config "$STELLARIA_WINDOWS_SIGNING_CONFIG"); fi
+          npm run tauri build -- "${ARGS[@]}"
+
+      - name: Upload installer
+        uses: actions/upload-artifact@v4
+        with:
+          name: stellaria-${{ matrix.target }}
+          path: ${{ matrix.artifacts }}
+          if-no-files-found: error
+          retention-days: 14

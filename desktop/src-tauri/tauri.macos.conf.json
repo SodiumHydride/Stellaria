@@ -1,0 +1,52 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "app": {
+    "windows": [
+      {
+        "label": "main",
+        "create": false,
+        "title": "星籁 Stellaria",
+        "width": 1360,
+        "height": 860,
+        "minWidth": 1100,
+        "minHeight": 700,
+        "center": true,
+        "resizable": true,
+        "visible": false,
+        "backgroundColor": "#e9e5df",
+        "theme": "Dark",
+        "dragDropEnabled": true,
+        "titleBarStyle": "Overlay",
+        "hiddenTitle": true,
+        "trafficLightPosition": {
+          "x": 18,
+          "y": 22
+        }
+      }
+    ]
+  },
+  "bundle": {
+    "targets": [
+      "app",
+      "dmg"
+    ],
+    "macOS": {
+      "minimumSystemVersion": "12.0",
+      "hardenedRuntime": true,
+      "dmg": {
+        "windowSize": {
+          "width": 660,
+          "height": 400
+        },
+        "appPosition": {
+          "x": 180,
+          "y": 190
+        },
+        "applicationFolderPosition": {
+          "x": 480,
+          "y": 190
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,28 @@
+.terms-text {
+  max-height: min(56vh, 520px);
+  overflow-y: auto;
+  padding-right: var(--s-2);
+  font-size: var(--fs-sm);
+  line-height: 1.7;
+  color: var(--text-2);
+}
+
+.terms-text h3 {
+  margin: var(--s-4) 0 var(--s-1-5);
+  font-size: var(--fs-md, 15px);
+  font-weight: 640;
+  color: var(--text-1);
+}
+
+.terms-text section:first-of-type h3 {
+  margin-top: var(--s-2);
+}
+
+.terms-text p {
+  margin: 0 0 var(--s-2);
+}
+
+.terms-text .terms-meta {
+  margin: 0;
+  font-size: var(--fs-xs);
+}

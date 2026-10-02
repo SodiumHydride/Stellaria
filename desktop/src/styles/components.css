@@ -1,0 +1,1183 @@
+/* Shared primitives. Feature styles live next to their components. */
+
+/* ---------- glass ---------- */
+.glass {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-highlight), var(--glass-shadow);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-radius: var(--r-xl);
+}
+
+.glass-strong {
+  background: var(--glass-bg-strong);
+  border: 1px solid var(--glass-border-strong);
+  box-shadow: var(--glass-highlight), var(--glass-shadow);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-radius: var(--r-lg);
+}
+
+.card {
+  background: var(--surface-1);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-lg);
+}
+
+/* ---------- buttons ---------- */
+.btn {
+  --btn-h: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  height: var(--btn-h);
+  padding: 0 var(--s-3-5);
+  border-radius: var(--r-md);
+  font-size: var(--fs-md);
+  font-weight: 560;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  color: var(--text-1);
+  background: var(--surface-2);
+  border: 1px solid var(--glass-border);
+  transition: background var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease),
+    transform var(--t-fast) var(--ease), box-shadow var(--t-med) var(--ease), opacity var(--t-fast);
+}
+
+.btn:hover:not(:disabled) {
+  background: var(--surface-3);
+  border-color: var(--glass-border-strong);
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(1px) scale(0.985);
+}
+
+.btn:disabled {
+  opacity: 0.45;
+}
+
+.btn svg {
+  width: 16px;
+  height: 16px;
+  flex: none;
+}
+
+.btn-sm {
+  --btn-h: 28px;
+  padding: 0 var(--s-2-5);
+  font-size: var(--fs-sm);
+  border-radius: var(--r-sm);
+  gap: 5px;
+}
+
+.btn-sm svg {
+  width: 14px;
+  height: 14px;
+}
+
+.btn-lg {
+  --btn-h: 42px;
+  padding: 0 var(--s-5);
+  font-size: var(--fs-lg);
+  border-radius: var(--r-lg);
+}
+
+.btn-primary {
+  --brand-star: var(--brand-star-on-primary);
+  --brand-glint: var(--brand-glint-on-primary);
+  background: var(--btn-primary);
+  border-color: var(--btn-primary-border);
+  color: var(--text-on-primary);
+  font-weight: 600;
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--btn-primary-hover);
+  border-color: var(--btn-primary-border);
+}
+
+.btn-primary:disabled {
+  opacity: 0.38;
+}
+
+/* a button that shows its own job: the fill grows with the progress, then it turns green and
+   draws a tick before the dialog around it closes */
+.btn.btn-busy {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.btn.btn-busy:disabled {
+  opacity: 1;
+  cursor: progress;
+}
+
+.btn.btn-busy::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: currentColor;
+  opacity: 0.16;
+  transform-origin: left;
+  transform: scaleX(var(--p, 0));
+  transition: transform var(--t-med) linear;
+}
+
+.btn.btn-done,
+.btn.btn-done:disabled {
+  opacity: 1;
+  background: var(--btn-done);
+  border-color: var(--btn-done);
+  color: var(--text-on-done);
+  transition: background var(--t-med) var(--ease), border-color var(--t-med) var(--ease), color var(--t-med) var(--ease);
+}
+
+.btn-done .tick path {
+  stroke-dasharray: 24;
+  stroke-dashoffset: 24;
+  animation: tick-draw var(--t-slow) var(--ease) 60ms forwards;
+}
+
+@keyframes tick-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root .btn-done .tick path {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+}
+
+.btn-ghost {
+  background: transparent;
+  border-color: transparent;
+  color: var(--text-2);
+}
+
+.btn-ghost:hover:not(:disabled) {
+  background: var(--surface-hover);
+  border-color: transparent;
+  color: var(--text-1);
+}
+
+.btn-danger {
+  background: var(--critical-soft);
+  border-color: color-mix(in srgb, var(--critical) 25%, transparent);
+  color: var(--critical);
+}
+
+.btn-danger:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--critical) 20%, transparent);
+  border-color: color-mix(in srgb, var(--critical) 40%, transparent);
+}
+
+.icon-btn {
+  display: inline-grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--r-sm);
+  color: var(--text-2);
+  transition: background var(--t-fast), color var(--t-fast), transform var(--t-fast);
+}
+
+.icon-btn:hover:not(:disabled) {
+  background: var(--surface-hover);
+  color: var(--text-1);
+}
+
+.icon-btn:active:not(:disabled) {
+  transform: scale(0.94);
+}
+
+.icon-btn svg {
+  width: 17px;
+  height: 17px;
+}
+
+.icon-btn.sm {
+  width: 26px;
+  height: 26px;
+}
+
+.icon-btn.sm svg {
+  width: 14px;
+  height: 14px;
+}
+
+.icon-btn.active {
+  background: var(--surface-active);
+  color: var(--text-1);
+}
+
+/* ---------- inputs ---------- */
+.input {
+  height: 34px;
+  width: 100%;
+  padding: 0 var(--s-3);
+  border-radius: var(--r-md);
+  background: var(--well);
+  border: 1px solid var(--control-border);
+  color: var(--text-1);
+  transition: border-color var(--t-fast), box-shadow var(--t-fast), background var(--t-fast);
+}
+
+.input::placeholder {
+  color: var(--text-4);
+}
+
+.input:hover {
+  border-color: var(--text-3);
+}
+
+.input:focus {
+  border-color: var(--accent-ring);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+textarea.input {
+  height: auto;
+  min-height: 72px;
+  padding: 9px var(--s-3);
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-wrap > svg {
+  position: absolute;
+  left: 11px;
+  width: 15px;
+  height: 15px;
+  color: var(--text-3);
+  pointer-events: none;
+}
+
+.input-wrap > .input {
+  padding-left: 34px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-1-5);
+}
+
+.field-label {
+  font-size: var(--fs-sm);
+  color: var(--text-2);
+  font-weight: 560;
+}
+
+.field-hint {
+  font-size: var(--fs-xs);
+  color: var(--text-3);
+}
+
+/* ---------- chips & badges ---------- */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 22px;
+  padding: 0 var(--s-2);
+  border-radius: var(--r-pill);
+  font-size: var(--fs-xs);
+  font-weight: 560;
+  color: var(--text-2);
+  background: var(--surface-2);
+  border: 1px solid var(--hairline);
+  white-space: nowrap;
+}
+
+.chip svg {
+  width: 12px;
+  height: 12px;
+}
+
+.chip.good {
+  color: var(--good);
+  background: var(--good-soft);
+  border-color: color-mix(in srgb, var(--good) 22%, transparent);
+}
+
+.chip.warning {
+  color: var(--warning);
+  background: var(--warning-soft);
+  border-color: color-mix(in srgb, var(--warning) 24%, transparent);
+}
+
+.chip.critical {
+  color: var(--critical);
+  background: var(--critical-soft);
+  border-color: color-mix(in srgb, var(--critical) 24%, transparent);
+}
+
+.chip.info {
+  color: var(--info);
+  background: var(--info-soft);
+  border-color: color-mix(in srgb, var(--info) 22%, transparent);
+}
+
+.chip.accent {
+  color: var(--accent-strong);
+  background: var(--accent-soft);
+  border-color: color-mix(in srgb, var(--accent) 26%, transparent);
+}
+
+.chip.button {
+  position: relative;
+  cursor: pointer;
+  transition: background var(--t-fast), border-color var(--t-fast);
+}
+
+/* 22 px chips, 24 px targets (inset counts from inside the border) */
+.chip.button::before {
+  content: '';
+  position: absolute;
+  inset: -2px -1px;
+}
+
+.chip.button:hover {
+  background: var(--surface-3);
+  border-color: var(--glass-border-strong);
+}
+
+.kbd {
+  display: inline-grid;
+  place-items: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 5px;
+  font-size: var(--fs-xs);
+  font-family: var(--font);
+  font-weight: 600;
+  color: var(--text-2);
+  background: var(--surface-2);
+  border: 1px solid var(--glass-border-strong);
+  border-bottom-width: 2px;
+  border-radius: 5px;
+}
+
+/* ---------- an inline link that is a button ---------- */
+.link-btn {
+  display: inline;
+  padding: 0;
+  font: inherit;
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--accent) 40%, transparent);
+  text-underline-offset: 3px;
+}
+
+.link-btn:hover {
+  text-decoration-color: currentColor;
+}
+
+/* ---------- segmented control ---------- */
+.segmented {
+  position: relative;
+  display: inline-flex;
+  padding: 3px;
+  gap: var(--s-0-5);
+  border-radius: var(--r-md);
+  background: var(--well-strong);
+  border: 1px solid var(--hairline);
+}
+
+.segmented button {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-1-5);
+  height: 28px;
+  padding: 0 var(--s-3);
+  border-radius: var(--r-sm);
+  font-size: var(--fs-sm);
+  font-weight: 560;
+  color: var(--text-3);
+  transition: color var(--t-fast);
+}
+
+.segmented button svg {
+  width: 14px;
+  height: 14px;
+}
+
+.segmented button:hover {
+  color: var(--text-1);
+}
+
+.segmented button[data-active='true'] {
+  color: var(--text-1);
+}
+
+.segmented.wrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.segmented.wrap button {
+  flex: 1 0 auto;
+  justify-content: center;
+  padding: 0 var(--s-2-5);
+  white-space: nowrap;
+}
+
+.segmented .seg-thumb {
+  position: absolute;
+  z-index: 0;
+  top: 3px;
+  bottom: 3px;
+  border-radius: var(--r-sm);
+  background: var(--surface-raised);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-sm);
+  transition: left var(--t-med) var(--ease), width var(--t-med) var(--ease), top var(--t-med) var(--ease);
+}
+
+/* ---------- progress ---------- */
+.progress {
+  position: relative;
+  height: 6px;
+  border-radius: var(--r-pill);
+  background: var(--fill-track);
+  overflow: hidden;
+}
+
+.progress > .bar {
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: inherit;
+  background: var(--fill);
+  transition: width var(--t-slow) var(--ease);
+}
+
+.progress.indeterminate > .bar {
+  width: 35% !important;
+  animation: progress-indeterminate 1.4s var(--ease) infinite;
+}
+
+@keyframes progress-indeterminate {
+  from {
+    left: -35%;
+  }
+  to {
+    left: 100%;
+  }
+}
+
+/* reduced motion: the bar stops sliding and breathes in place instead */
+@media (prefers-reduced-motion: reduce) {
+  .progress.indeterminate > .bar {
+    left: 0;
+    width: 100% !important;
+    animation: pulse 2.4s var(--ease) infinite;
+  }
+}
+
+/* ---------- switch (radix) ---------- */
+.switch {
+  position: relative;
+  width: 38px;
+  height: 22px;
+  flex: none;
+  border-radius: var(--r-pill);
+  background: var(--fill-track);
+  border: 1px solid var(--control-border);
+  transition: background var(--t-med) var(--ease);
+}
+
+.switch[data-state='checked'] {
+  background: var(--accent);
+  border-color: transparent;
+}
+
+/* 22 px track, 24 px target (inset counts from inside the border) */
+.switch::before {
+  content: '';
+  position: absolute;
+  inset: -2px -1px;
+}
+
+.switch .switch-thumb {
+  display: block;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.25);
+  transform: translateX(2px);
+  transition: transform var(--t-med) var(--ease-spring), width var(--t-fast) var(--ease);
+}
+
+.switch[data-state='checked'] .switch-thumb {
+  transform: translateX(18px);
+}
+
+/* held down, the thumb stretches toward where it will go */
+.switch:active:not(:disabled) .switch-thumb {
+  width: 20px;
+}
+
+.switch[data-state='checked']:active:not(:disabled) .switch-thumb {
+  transform: translateX(14px);
+}
+
+/* ---------- slider (radix) ---------- */
+.slider {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 22px;
+  touch-action: none;
+  user-select: none;
+}
+
+/* 24 px tall target */
+.slider::before {
+  content: '';
+  position: absolute;
+  inset: -1px 0;
+}
+
+.slider-track {
+  position: relative;
+  flex: 1;
+  height: 4px;
+  border-radius: var(--r-pill);
+  background: var(--fill-track);
+}
+
+.slider-range {
+  position: absolute;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--fill);
+}
+
+.slider-thumb {
+  display: block;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #fff;
+  border: 1px solid rgb(var(--ink) / 0.12);
+  box-shadow: 0 1px 4px rgb(0 0 0 / 0.2);
+  transition: box-shadow var(--t-fast), transform var(--t-fast);
+}
+
+.slider-thumb:hover {
+  box-shadow: 0 0 0 5px var(--accent-soft), 0 1px 4px rgb(0 0 0 / 0.2);
+}
+
+.slider-thumb:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 5px var(--accent-ring), 0 1px 4px rgb(0 0 0 / 0.2);
+}
+
+.slider-center-mark {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 2px;
+  height: 10px;
+  margin: -5px 0 0 -1px;
+  border-radius: 1px;
+  background: var(--text-4);
+  pointer-events: none;
+}
+
+/* ---------- tooltip / popover / menu (radix) ---------- */
+.tooltip {
+  z-index: var(--z-palette);
+  padding: var(--s-1-5) var(--s-2-5);
+  border-radius: var(--r-sm);
+  font-size: var(--fs-sm);
+  color: var(--text-1);
+  background: var(--glass-solid);
+  border: 1px solid var(--glass-border-strong);
+  box-shadow: var(--shadow-pop);
+  max-width: 280px;
+  animation: pop-in var(--t-fast) var(--ease);
+}
+
+.popover {
+  z-index: var(--z-overlay);
+  padding: var(--s-3);
+  border-radius: var(--r-lg);
+  background: var(--glass-bg-strong);
+  border: 1px solid var(--glass-border-strong);
+  box-shadow: var(--glass-highlight), var(--glass-shadow);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  animation: pop-in var(--t-med) var(--ease);
+}
+
+.menu {
+  z-index: var(--z-overlay);
+  min-width: 190px;
+  padding: 5px;
+  border-radius: var(--r-md);
+  background: var(--glass-bg-strong);
+  border: 1px solid var(--glass-border-strong);
+  box-shadow: var(--glass-highlight), var(--glass-shadow);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  animation: pop-in var(--t-fast) var(--ease);
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  height: 32px;
+  padding: 0 var(--s-2-5);
+  border-radius: var(--r-sm);
+  font-size: var(--fs-md);
+  color: var(--text-1);
+  outline: none;
+  cursor: pointer;
+}
+
+.menu-item svg {
+  width: 15px;
+  height: 15px;
+  color: var(--text-2);
+}
+
+.menu-item[data-highlighted] {
+  background: var(--surface-active);
+}
+
+.menu-item.danger,
+.menu-item.danger svg {
+  color: var(--critical);
+}
+
+.menu-item[data-disabled] {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.menu-sep {
+  height: 1px;
+  margin: var(--s-1) var(--s-1-5);
+  background: var(--hairline);
+}
+
+.menu-label {
+  padding: var(--s-1-5) var(--s-2-5) var(--s-1);
+  font-size: var(--fs-xs);
+  color: var(--text-3);
+  font-weight: 600;
+}
+
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---------- dialog ---------- */
+.dialog-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-overlay);
+  background: var(--overlay);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  animation: fade-in var(--t-med) var(--ease);
+}
+
+/* the scrim's light blur follows the glass setting like --glass-blur does */
+:root[data-glass='off'] .dialog-overlay,
+:root[data-low-power='on'] .dialog-overlay {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  :root .dialog-overlay {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+
+.dialog {
+  position: fixed;
+  z-index: var(--z-overlay);
+  left: 50%;
+  top: 50%;
+  width: min(560px, calc(100vw - 48px));
+  max-height: calc(100vh - 96px);
+  overflow: auto;
+  transform: translate(-50%, -50%);
+  padding: var(--s-6);
+  border-radius: var(--r-xl);
+  background: var(--glass-bg-strong);
+  border: 1px solid var(--glass-border-strong);
+  box-shadow: var(--glass-highlight), var(--shadow-pop);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  animation: dialog-in var(--t-med) var(--ease);
+}
+
+/* exits: Radix keeps the closing element mounted until its animation ends */
+.dialog[data-state='closed'] {
+  animation: dialog-out var(--t-fast) var(--ease-exit) forwards;
+}
+
+.dialog-overlay[data-state='closed'] {
+  animation: fade-out var(--t-fast) var(--ease-exit) forwards;
+}
+
+.menu[data-state='closed'],
+.popover[data-state='closed'] {
+  animation: pop-out calc(var(--t-fast) * 0.8) var(--ease-exit) forwards;
+}
+
+@keyframes dialog-out {
+  to {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.98);
+  }
+}
+
+@keyframes fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes pop-out {
+  to {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+}
+
+.dialog.wide {
+  width: min(760px, calc(100vw - 48px));
+}
+
+.dialog-title {
+  font-family: var(--font-display);
+  font-size: var(--fs-xl);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.dialog-desc {
+  margin-top: var(--s-1-5);
+  color: var(--text-2);
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--s-2);
+  margin-top: var(--s-6);
+}
+
+@keyframes dialog-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -48%) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ---------- typography helpers ---------- */
+.eyebrow {
+  font-size: var(--fs-xs);
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+.section-title {
+  font-size: var(--fs-lg);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--text-1);
+}
+
+.muted {
+  color: var(--text-3);
+}
+
+.secondary {
+  color: var(--text-2);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+}
+
+.spacer {
+  flex: 1;
+}
+
+.divider {
+  height: 1px;
+  background: var(--hairline);
+}
+
+/* ---------- empty state ---------- */
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: var(--s-2-5);
+  padding: var(--s-10) var(--s-6);
+  color: var(--text-2);
+}
+
+.empty h3 {
+  font-size: var(--fs-xl);
+  font-weight: 650;
+  color: var(--text-1);
+}
+
+.empty p {
+  max-width: 420px;
+  color: var(--text-3);
+}
+
+/* ---------- skeleton ---------- */
+.skeleton {
+  border-radius: var(--r-sm);
+  background: linear-gradient(90deg, var(--surface-1) 25%, var(--surface-3) 50%, var(--surface-1) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s linear infinite;
+}
+
+@keyframes shimmer {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+
+/* ---------- misc ---------- */
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.pulse {
+  animation: pulse 2s var(--ease) infinite;
+}
+
+/* the status text of something running: a light sweeps across it, in step with the brand mark's glint */
+.shimmer-text {
+  color: transparent;
+  background: linear-gradient(90deg, var(--text-3) 0%, var(--text-3) 38%, var(--text-1) 50%, var(--text-3) 62%, var(--text-3) 100%);
+  background-size: 260% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: text-shimmer 1.6s linear infinite;
+}
+
+@keyframes text-shimmer {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: 0 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root .shimmer-text {
+    color: inherit;
+    background: none;
+    animation: none;
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex: none;
+  background: var(--text-4);
+}
+
+.status-dot.good {
+  background: var(--good);
+}
+
+.status-dot.active {
+  background: var(--accent);
+  animation: pulse 1.6s var(--ease) infinite;
+}
+
+/* reduced motion: placeholders and status dots hold still; spinners fade in place of turning */
+@media (prefers-reduced-motion: reduce) {
+  .skeleton {
+    animation: none;
+    background: var(--surface-2);
+  }
+
+  .pulse,
+  .status-dot.active {
+    animation: none;
+  }
+
+  .spin {
+    animation: pulse 2s var(--ease) infinite;
+  }
+}
+
+.status-dot.warning {
+  background: var(--warning);
+}
+
+.status-dot.critical {
+  background: var(--critical);
+}
+
+/* ---------- ring ---------- */
+.ring {
+  position: relative;
+  flex: none;
+}
+
+.ring svg {
+  display: block;
+}
+
+.ring-center {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  text-align: center;
+}
+
+.empty-icon {
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  margin-bottom: var(--s-1-5);
+  border-radius: 20px;
+  background: var(--surface-2);
+  border: 1px solid var(--hairline);
+  color: var(--text-3);
+}
+
+.empty-icon svg {
+  width: 30px;
+  height: 30px;
+}
+
+.btn-primary .kbd {
+  color: var(--text-on-primary);
+  background: transparent;
+  border-color: color-mix(in srgb, var(--text-on-primary) 30%, transparent);
+  opacity: 0.75;
+}
+
+.has-hint {
+  cursor: help;
+  text-decoration: underline dotted var(--text-4);
+  text-underline-offset: 3px;
+}
+
+.good-text,
+.warn-text,
+.critical-text {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.good-text {
+  color: var(--good);
+}
+
+.warn-text {
+  color: var(--warning);
+}
+
+.critical-text {
+  color: var(--critical);
+}
+
+.good-text svg,
+.warn-text svg,
+.critical-text svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* level meter */
+.level-meter {
+  display: inline-grid;
+  gap: var(--s-0-5);
+  flex: none;
+}
+
+.level-meter-ch {
+  position: relative;
+  height: 4px;
+  overflow: hidden;
+  border-radius: 2px;
+  background: rgb(var(--ink) / 0.08);
+}
+
+.level-meter-bar {
+  position: absolute;
+  inset: 0;
+  transform-origin: left center;
+  transform: scaleX(0);
+  background: var(--good);
+}
+
+.level-meter-bar[data-level='hot'] {
+  background: var(--warning);
+}
+
+.level-meter-bar[data-level='clip'] {
+  background: var(--critical);
+}
+
+.level-meter-hold {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -2px;
+  width: 2px;
+  background: var(--text-3);
+}
+
+/* generated param controls: fine-grained settings folded under "advanced", by group */
+.param-advanced {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+  padding-top: var(--s-2);
+  border-top: 1px solid var(--hairline);
+}
+
+.param-advanced-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-2);
+  min-height: 28px;
+}
+
+.param-advanced-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-1-5);
+  min-height: 28px;
+  padding: 0 var(--s-1);
+  margin-left: calc(-1 * var(--s-1));
+  border-radius: var(--r-sm);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text-2);
+}
+
+.param-advanced-toggle:hover {
+  color: var(--text-1);
+  background: var(--surface-hover);
+}
+
+.param-advanced-toggle:focus-visible {
+  outline: 2px solid var(--accent-ring);
+  outline-offset: 1px;
+}
+
+.param-advanced-toggle svg {
+  width: 14px;
+  height: 14px;
+  transition: transform var(--t-fast);
+}
+
+.param-advanced.open .param-advanced-toggle svg {
+  transform: rotate(90deg);
+}
+
+.param-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2-5);
+}
+
+.param.changed .field-label::after {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-left: var(--s-1-5);
+  border-radius: 50%;
+  background: var(--accent);
+  vertical-align: middle;
+}

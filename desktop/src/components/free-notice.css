@@ -1,0 +1,129 @@
+/* "星籁是免费的": calligraphic type and a cinnabar seal. The face is LXGW WenKai (霞鹜文楷,
+   SIL OFL 1.1, assets/fonts/LXGW-WenKai-OFL.txt), cut down to the notice's own characters. */
+@font-face {
+  font-family: 'Stellaria WenKai';
+  src: url('../assets/fonts/wenkai-free.woff') format('woff');
+  font-weight: 500;
+  font-display: swap;
+}
+
+.free-card {
+  --seal: #b4574b;
+  --seal-paper: #fbf6ee;
+  position: relative;
+  padding: var(--s-5) var(--s-5) var(--s-3-5);
+  border-radius: var(--r-lg);
+  background:
+    radial-gradient(120% 90% at 0% 0%, rgb(255 255 255 / 0.5), transparent 60%),
+    var(--glass-solid);
+  border: 1px solid var(--glass-border);
+  overflow: hidden;
+}
+
+:root[data-theme='dark'] .free-card {
+  --seal: #b9655a;
+  --seal-paper: #f3ece2;
+  background: var(--glass-solid);
+}
+
+.free-card .seal {
+  position: absolute;
+  top: var(--s-4);
+  right: var(--s-5);
+  transform: rotate(-8deg);
+}
+
+.free-title,
+.free-body,
+.free-line {
+  font-family: 'Stellaria WenKai', var(--font-display);
+  margin: 0;
+}
+
+.free-title {
+  font-size: 30px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  line-height: 1.25;
+  padding-right: 80px;
+  color: var(--text-1);
+}
+
+.free-body {
+  margin-top: var(--s-1-5);
+  font-size: 17px;
+  letter-spacing: 0.04em;
+  color: var(--text-2);
+  padding-right: 80px;
+}
+
+.free-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-2) var(--s-2-5);
+  margin-top: var(--s-4);
+  padding-top: var(--s-3);
+  border-top: 1px dashed var(--hairline);
+}
+
+.free-label {
+  font-size: var(--fs-sm);
+  color: var(--text-3);
+}
+
+.free-url {
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  color: var(--text-1);
+  user-select: text;
+  overflow-wrap: anywhere;
+}
+
+.seal .seal-ink {
+  fill: var(--seal);
+}
+
+.seal .seal-rule {
+  fill: none;
+  stroke: var(--seal-paper);
+  stroke-width: 1.4;
+  opacity: 0.85;
+}
+
+.seal .seal-text {
+  font-family: 'Stellaria WenKai', serif;
+  font-weight: 500;
+  font-size: 20px;
+  fill: var(--seal-paper);
+  text-anchor: middle;
+}
+
+.seal .seal-text.one {
+  font-size: 34px;
+}
+
+.seal .seal-star {
+  fill: var(--seal-paper);
+}
+
+.seal .seal-text.en {
+  font-size: 14px;
+  letter-spacing: 0.06em;
+}
+
+/* the welcome screen's one line */
+.free-line {
+  --seal: #b4574b;
+  --seal-paper: #fbf6ee;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  font-size: var(--fs-lg);
+  letter-spacing: 0.04em;
+  color: var(--text-2);
+}
+
+.free-line .seal {
+  transform: rotate(-8deg);
+}

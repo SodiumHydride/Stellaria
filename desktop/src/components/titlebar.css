@@ -1,0 +1,146 @@
+.titlebar {
+  position: relative;
+  z-index: var(--z-titlebar);
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  height: var(--titlebar-h);
+  padding: 0 0 0 var(--s-3-5);
+  flex: none;
+}
+
+.titlebar.mac {
+  padding-left: 84px;
+}
+
+.tb-brand {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-width: 0;
+}
+
+.tb-logo {
+  display: grid;
+  place-items: center;
+  color: var(--text-1);
+}
+
+.tb-name {
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: var(--text-1);
+}
+
+.tb-center {
+  display: flex;
+  justify-content: center;
+}
+
+.tb-center .segmented {
+  background: var(--well-strong);
+  border-color: var(--hairline);
+  border-radius: var(--r-pill);
+}
+
+.tb-center .segmented button {
+  height: 30px;
+  padding: 0 var(--s-4-5);
+  border-radius: var(--r-pill);
+  font-size: var(--fs-md);
+}
+
+.tb-center .segmented .seg-thumb {
+  border-radius: var(--r-pill);
+}
+
+.tb-right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--s-1-5);
+  height: 100%;
+}
+
+.tb-search {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  height: 30px;
+  min-width: 200px;
+  padding: 0 var(--s-2) 0 11px;
+  border-radius: var(--r-pill);
+  font-size: var(--fs-sm);
+  color: var(--text-3);
+  background: var(--well-strong);
+  border: 1px solid var(--hairline);
+  transition: border-color var(--t-fast), color var(--t-fast);
+}
+
+.tb-search:hover {
+  border-color: var(--glass-border-strong);
+  color: var(--text-2);
+}
+
+.tb-search svg {
+  width: 14px;
+  height: 14px;
+}
+
+.tb-search span:first-of-type {
+  flex: 1;
+  text-align: left;
+}
+
+.tb-search .kbd {
+  height: 18px;
+  min-width: 18px;
+  font-size: var(--fs-xs);
+}
+
+.tb-window {
+  display: flex;
+  height: 100%;
+  margin-left: var(--s-1-5);
+}
+
+.tb-window button {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 100%;
+  color: var(--text-2);
+  transition: background var(--t-fast), color var(--t-fast);
+}
+
+.tb-window button svg {
+  width: 15px;
+  height: 15px;
+  stroke-width: 1.5;
+}
+
+.tb-window button:nth-child(2) svg {
+  width: 12px;
+  height: 12px;
+}
+
+.tb-window button:hover {
+  background: var(--surface-3);
+  color: var(--text-1);
+}
+
+.tb-window button.close:hover {
+  background: #e81123;
+  color: #fff;
+}
+
+@media (max-width: 1180px) {
+  .tb-search span:first-of-type {
+    display: none;
+  }
+  .tb-search {
+    min-width: 0;
+  }
+}

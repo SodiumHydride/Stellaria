@@ -1,0 +1,62 @@
+.waveform {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  width: 100%;
+  min-width: 0;
+}
+
+.waveform canvas {
+  display: block;
+  flex: 1;
+  min-width: 0;
+}
+
+.waveform canvas.clickable {
+  cursor: pointer;
+}
+
+.wave-play,
+.play-btn {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  color: var(--text-1);
+  background: var(--surface-3);
+  border: 1px solid var(--glass-border);
+  transition: background var(--t-fast), transform var(--t-fast), box-shadow var(--t-med);
+}
+
+.wave-play svg,
+.play-btn svg {
+  width: 12px;
+  height: 12px;
+  fill: currentColor;
+  stroke-width: 0;
+  margin-left: 1px;
+}
+
+.wave-play.playing svg,
+.play-btn.playing svg {
+  margin-left: 0;
+}
+
+.wave-play:hover,
+.play-btn:hover {
+  background: var(--accent-soft);
+  border-color: rgb(var(--accent-rgb) / 0.4);
+  transform: scale(1.06);
+}
+
+.wave-play.playing,
+.play-btn.playing {
+  background: var(--fill);
+  border-color: rgb(var(--ink) / 0.25);
+  }
+
+.play-btn {
+  position: relative;
+}

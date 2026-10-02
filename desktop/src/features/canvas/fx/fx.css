@@ -1,0 +1,960 @@
+/* Effects chain editor (inspector column) */
+
+.fx-chain {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  min-width: 0;
+}
+
+.fx-head {
+  display: flex;
+  align-items: center;
+  gap: var(--s-1-5);
+  min-height: 26px;
+}
+
+.fx-count {
+  display: inline-grid;
+  place-items: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: var(--r-pill);
+  background: var(--surface-2);
+  font-size: var(--fs-xs);
+  font-weight: 650;
+  color: var(--text-3);
+}
+
+.fx-presets-btn {
+  --btn-h: 26px;
+  margin-right: -6px;
+  padding: 0 var(--s-2);
+}
+
+/* ---------- slots ---------- */
+.fx-slots {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-1-5);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fx-slot {
+  position: relative;
+  border-radius: var(--r-md);
+  background: var(--surface-1);
+  border: 1px solid var(--hairline);
+  transition: background var(--t-fast), border-color var(--t-fast), box-shadow var(--t-med) var(--ease);
+}
+
+.fx-slot:hover,
+.fx-slot.open {
+  border-color: var(--glass-border-strong);
+}
+
+.fx-slot.open {
+  background: var(--surface-2);
+}
+
+.fx-slot.problem {
+  border-color: color-mix(in srgb, var(--warning) 32%, transparent);
+}
+
+.fx-slots.sorting .fx-slot {
+  transition: transform var(--t-med) var(--ease), box-shadow var(--t-med) var(--ease);
+}
+
+.fx-slots.sorting .fx-slot.lifted {
+  z-index: 2;
+  transition: box-shadow var(--t-med) var(--ease);
+  background: var(--glass-solid);
+  border-color: var(--glass-border-strong);
+  box-shadow: var(--shadow-pop);
+}
+
+.fx-slots.sorting,
+.fx-slots.sorting * {
+  cursor: grabbing !important;
+}
+
+.fx-slot-head {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  min-height: 40px;
+  padding: var(--s-1) var(--s-1) var(--s-1) var(--s-0-5);
+}
+
+.fx-grip {
+  position: relative;
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 16px;
+  height: 28px;
+  border-radius: var(--r-xs);
+  color: var(--text-4);
+  cursor: grab;
+  touch-action: none;
+  transition: color var(--t-fast);
+}
+
+.fx-grip:hover,
+.fx-grip:focus-visible {
+  color: var(--text-2);
+}
+
+/* 24 px wide target: into the slot's edge on the left, up to the power button on the right */
+.fx-grip::before {
+  content: '';
+  position: absolute;
+  inset: 0 -3px 0 -5px;
+}
+
+.fx-grip svg {
+  width: 14px;
+  height: 14px;
+}
+
+.fx-power {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  color: var(--text-4);
+  transition: background var(--t-fast), color var(--t-fast), transform var(--t-fast);
+}
+
+.fx-power svg {
+  width: 13px;
+  height: 13px;
+  stroke-width: 2.4;
+}
+
+.fx-power.on {
+  color: var(--accent-strong);
+  background: var(--accent-soft);
+}
+
+.fx-power:hover {
+  color: var(--text-1);
+}
+
+.fx-power:active {
+  transform: scale(0.92);
+}
+
+.fx-slot-title {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+  gap: var(--s-1);
+  min-height: 30px;
+  padding: var(--s-0-5) var(--s-1) var(--s-0-5) var(--s-1-5);
+  border-radius: var(--r-sm);
+  text-align: left;
+  transition: background var(--t-fast);
+}
+
+.fx-slot-title:hover {
+  background: var(--surface-hover);
+}
+
+.fx-slot-names {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.fx-slot-name,
+.fx-slot-sub {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fx-slot-name {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--text-1);
+  transition: color var(--t-fast);
+}
+
+.fx-slot-sub {
+  font-size: var(--fs-xs);
+  line-height: 1.3;
+  color: var(--text-3);
+}
+
+.fx-slot-chevron,
+.fx-slot-warn {
+  flex: none;
+  width: 14px;
+  height: 14px;
+}
+
+.fx-slot-chevron {
+  color: var(--text-4);
+  transform: rotate(-90deg);
+  transition: transform var(--t-med) var(--ease), color var(--t-fast);
+}
+
+.fx-slot-title:hover .fx-slot-chevron {
+  color: var(--text-2);
+}
+
+.fx-slot.open .fx-slot-chevron {
+  transform: none;
+}
+
+.fx-slot-warn {
+  color: var(--warning);
+}
+
+.fx-slot.bypassed .fx-slot-name {
+  color: var(--text-3);
+}
+
+.fx-more {
+  flex: none;
+  color: var(--text-3);
+}
+
+.fx-more[data-state='open'] {
+  background: var(--surface-hover);
+  color: var(--text-1);
+}
+
+/* dry/wet mini fader: a 24 px slider around the 22 px bar */
+.fx-fader {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: none;
+  width: 44px;
+  height: 24px;
+  border-radius: var(--r-xs);
+  cursor: ew-resize;
+  touch-action: none;
+  transition: opacity var(--t-fast);
+}
+
+.fx-fader-box {
+  position: relative;
+  width: 100%;
+  height: 22px;
+  overflow: hidden;
+  border-radius: var(--r-xs);
+  background: var(--well-strong);
+  border: 1px solid var(--hairline);
+  transition: border-color var(--t-fast);
+}
+
+.fx-fader:hover .fx-fader-box {
+  border-color: var(--glass-border-strong);
+}
+
+.fx-fader:focus-visible {
+  outline: 2px solid var(--accent-ring);
+  outline-offset: 0;
+}
+
+.fx-fader-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: rgb(var(--accent-rgb) / 0.22);
+  box-shadow: inset -2px 0 0 rgb(var(--accent-rgb) / 0.75);
+  pointer-events: none;
+}
+
+.fx-fader.full .fx-fader-fill {
+  box-shadow: none;
+}
+
+.fx-fader-text {
+  position: relative;
+  display: grid;
+  place-items: center;
+  height: 100%;
+  font-size: var(--fs-xs);
+  font-weight: 650;
+  color: var(--text-1);
+  pointer-events: none;
+}
+
+.fx-fader.dim {
+  opacity: 0.5;
+}
+
+/* expanded slot */
+.fx-slot-body {
+  padding: var(--s-3) var(--s-3) var(--s-3-5);
+  border-top: 1px solid var(--hairline);
+  animation: fx-reveal var(--t-med) var(--ease);
+}
+
+.fx-slot.bypassed .fx-slot-body {
+  opacity: 0.62;
+}
+
+@keyframes fx-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(-3px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.fx-params {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+  margin: 0;
+}
+
+.fx-params .field {
+  gap: var(--s-1);
+}
+
+.fx-params .segmented {
+  display: flex;
+}
+
+.fx-params .segmented button {
+  flex: 1;
+  justify-content: center;
+  padding: 0 var(--s-1-5);
+}
+
+.fx-params .input {
+  height: 28px;
+  font-size: var(--fs-sm);
+}
+
+.fx-notes {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--s-1);
+  margin-top: -6px;
+}
+
+.fx-notes-bpm {
+  margin-right: var(--s-0-5);
+  font-size: var(--fs-xs);
+  color: var(--text-3);
+  cursor: help;
+}
+
+.fx-note {
+  position: relative;
+  height: 22px;
+  padding: 0 7px;
+  border-radius: var(--r-pill);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: var(--text-2);
+  background: var(--surface-2);
+  border: 1px solid var(--hairline);
+  transition: background var(--t-fast), color var(--t-fast), border-color var(--t-fast);
+}
+
+.fx-note:hover {
+  background: var(--surface-3);
+  color: var(--text-1);
+}
+
+.fx-note.on {
+  color: var(--accent-strong);
+  background: var(--accent-soft);
+  border-color: color-mix(in srgb, var(--accent) 30%, transparent);
+}
+
+/* 22 px pill, 24 px target (inset counts from inside the border) */
+.fx-note::before {
+  content: '';
+  position: absolute;
+  inset: -2px -1px;
+}
+
+.fx-note-ms {
+  margin-top: -6px;
+  font-size: var(--fs-xs);
+  color: var(--text-3);
+}
+
+/* empty chain */
+.fx-empty {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  padding: var(--s-3);
+  border-radius: var(--r-md);
+  background: var(--surface-1);
+  border: 1px solid var(--hairline);
+}
+
+.fx-empty-label {
+  font-size: var(--fs-sm);
+  color: var(--text-3);
+}
+
+.fx-starters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-1-5);
+}
+
+.fx-starters .chip {
+  height: 26px;
+  padding: 0 var(--s-2-5);
+  font-size: var(--fs-sm);
+  color: var(--text-1);
+}
+
+/* add */
+.fx-add-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-1-5);
+  height: 34px;
+  border-radius: var(--r-md);
+  border: 1px dashed var(--glass-border-strong);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text-2);
+  transition: background var(--t-fast), color var(--t-fast), border-color var(--t-fast);
+}
+
+.fx-add-btn:hover,
+.fx-add-btn[data-state='open'] {
+  background: var(--surface-hover);
+  border-color: rgb(var(--accent-rgb) / 0.55);
+  color: var(--text-1);
+}
+
+.fx-add-btn svg {
+  width: 15px;
+  height: 15px;
+}
+
+/* ---------- popovers ---------- */
+.fx-pop {
+  width: 284px;
+  max-width: calc(100vw - 24px);
+  padding: var(--s-1-5);
+}
+
+.fx-add-pop {
+  width: 300px;
+  padding: 0;
+  overflow: hidden;
+}
+
+.fx-cmd-search {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  height: 42px;
+  padding: 0 var(--s-3);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.fx-cmd-search svg {
+  flex: none;
+  width: 15px;
+  height: 15px;
+  color: var(--text-3);
+}
+
+.fx-cmd-search input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  border: none;
+  background: transparent;
+  color: var(--text-1);
+  font-size: var(--fs-md);
+}
+
+.fx-cmd-search input::placeholder {
+  color: var(--text-4);
+}
+
+.fx-cmd-search input:focus-visible {
+  outline: none;
+}
+
+.fx-cmd-list {
+  max-height: min(380px, 52vh);
+  overflow: auto;
+  padding: var(--s-0-5) var(--s-1-5) var(--s-1-5);
+}
+
+.fx-cmd [cmdk-group-heading] {
+  padding: 9px var(--s-2) var(--s-1);
+  font-size: var(--fs-xs);
+  font-weight: 650;
+  letter-spacing: 0.04em;
+  color: var(--text-3);
+}
+
+.fx-cmd [cmdk-item] {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  min-height: 32px;
+  padding: 0 var(--s-2);
+  border-radius: var(--r-sm);
+  font-size: var(--fs-md);
+  color: var(--text-1);
+  cursor: pointer;
+}
+
+.fx-cmd [cmdk-item][data-selected='true'] {
+  background: var(--surface-active);
+}
+
+.fx-cmd [cmdk-item] > svg {
+  flex: none;
+  width: 15px;
+  height: 15px;
+  color: var(--text-3);
+}
+
+.fx-cmd-name {
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fx-cmd-meta {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--fs-xs);
+  color: var(--text-3);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fx-fmt {
+  flex: none;
+  margin-left: auto;
+  padding: 1px 5px;
+  border-radius: 4px;
+  border: 1px solid var(--hairline);
+  background: var(--surface-1);
+  font-size: var(--fs-xs);
+  font-weight: 650;
+  letter-spacing: 0.04em;
+  color: var(--text-3);
+}
+
+.fx-cmd .fx-cmd-quiet {
+  color: var(--text-2);
+}
+
+.fx-cmd .fx-cmd-end {
+  margin-left: auto;
+  width: 14px;
+  height: 14px;
+  color: var(--text-4);
+}
+
+.fx-cmd-empty {
+  padding: var(--s-5) var(--s-2);
+  text-align: center;
+  font-size: var(--fs-sm);
+  color: var(--text-3);
+}
+
+.fx-cmd-foot {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  width: 100%;
+  height: 38px;
+  padding: 0 var(--s-3-5);
+  border-top: 1px solid var(--hairline);
+  font-size: var(--fs-sm);
+  color: var(--text-2);
+  transition: background var(--t-fast), color var(--t-fast);
+}
+
+.fx-cmd-foot:hover {
+  background: var(--surface-hover);
+  color: var(--text-1);
+}
+
+.fx-cmd-foot svg {
+  width: 14px;
+  height: 14px;
+  color: var(--text-3);
+}
+
+.fx-pop-label {
+  padding: var(--s-2) var(--s-2) 3px;
+  font-size: var(--fs-xs);
+  font-weight: 650;
+  letter-spacing: 0.04em;
+  color: var(--text-3);
+}
+
+.fx-pop-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  min-width: 0;
+  padding: var(--s-1-5) var(--s-2);
+  border-radius: var(--r-sm);
+  text-align: left;
+  transition: background var(--t-fast);
+}
+
+.fx-pop-item:hover:not(:disabled) {
+  background: var(--surface-hover);
+}
+
+.fx-pop-item:focus-visible,
+.fx-pop-main:focus-visible {
+  outline: none;
+  background: var(--surface-active);
+}
+
+.fx-pop-item.has-action:focus-within {
+  background: var(--surface-hover);
+}
+
+.fx-pop-item:disabled {
+  opacity: 0.45;
+}
+
+.fx-pop-item.has-action {
+  flex-direction: row;
+  align-items: center;
+  padding: 0 var(--s-1) 0 0;
+}
+
+.fx-pop-main {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 1;
+  min-width: 0;
+  padding: var(--s-1-5) var(--s-2);
+  text-align: left;
+}
+
+.fx-pop-name {
+  font-size: var(--fs-md);
+  font-weight: 560;
+  color: var(--text-1);
+}
+
+.fx-pop-meta {
+  max-width: 100%;
+  font-size: var(--fs-xs);
+  color: var(--text-3);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fx-pop-del {
+  flex: none;
+  opacity: 0;
+}
+
+.fx-pop-item:hover .fx-pop-del,
+.fx-pop-del:focus-visible {
+  opacity: 1;
+}
+
+.fx-pop-empty {
+  padding: var(--s-0-5) var(--s-2) var(--s-2);
+  font-size: var(--fs-sm);
+  color: var(--text-3);
+}
+
+.fx-pop-sep {
+  height: 1px;
+  margin: var(--s-1) var(--s-0-5);
+  background: var(--hairline);
+}
+
+.fx-pop-save-btn {
+  flex-direction: row;
+  align-items: center;
+  gap: var(--s-2);
+}
+
+.fx-pop-save-btn svg {
+  width: 15px;
+  height: 15px;
+  color: var(--text-2);
+}
+
+.fx-pop-save-btn .fx-pop-name {
+  font-size: var(--fs-sm);
+  color: var(--text-2);
+}
+
+.fx-pop-save {
+  display: flex;
+  gap: var(--s-1-5);
+  padding: var(--s-1);
+}
+
+.fx-pop-save .input {
+  height: 28px;
+  font-size: var(--fs-sm);
+}
+
+/* ---------- VST slot ---------- */
+.fx-vst {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2-5);
+}
+
+.fx-vst-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+}
+
+.fx-tip-wrap {
+  display: inline-flex;
+}
+
+.fx-editor-open {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  min-height: 34px;
+  padding: 3px 3px 3px var(--s-2-5);
+  border-radius: var(--r-sm);
+  background: var(--accent-soft);
+  border: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
+  font-size: var(--fs-sm);
+  font-weight: 560;
+  color: var(--accent-strong);
+}
+
+.fx-editor-dot {
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: pulse 1.6s var(--ease) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fx-editor-dot {
+    animation: none;
+  }
+}
+
+.fx-editor-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.fx-vp {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-1-5);
+}
+
+.fx-vp-tools {
+  display: flex;
+  align-items: center;
+  gap: var(--s-1-5);
+}
+
+.fx-vp-search {
+  flex: 1;
+  min-width: 0;
+}
+
+.fx-vp-search > svg {
+  left: 9px;
+  width: 14px;
+  height: 14px;
+}
+
+.fx-vp-search > .input {
+  height: 28px;
+  padding-left: 29px;
+  padding-right: 26px;
+  font-size: var(--fs-sm);
+}
+
+.fx-vp-search .fx-vp-clear {
+  position: absolute;
+  right: 3px;
+  width: 22px;
+  height: 22px;
+}
+
+.fx-vp-search .fx-vp-clear::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+}
+
+.fx-vp-changed {
+  flex: none;
+  height: 24px;
+}
+
+.fx-vp-scroll {
+  margin: 0 -12px;
+  padding: 0 var(--s-3);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.fx-vp-scroll.more {
+  -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 22px), transparent);
+  mask-image: linear-gradient(to bottom, #000 calc(100% - 22px), transparent);
+}
+
+.fx-vp-row {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1px;
+}
+
+.fx-vp-line {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  min-width: 0;
+}
+
+/* reset dot: the whole 12 px gutter left of the name, 24 px tall; nothing else is in reach */
+.fx-vp-dot {
+  position: absolute;
+  left: -12px;
+  width: 12px;
+  height: 24px;
+}
+
+.fx-vp-dot::after {
+  content: '';
+  position: absolute;
+  left: 3px;
+  top: 9px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  transition: transform var(--t-fast) var(--ease);
+}
+
+button.fx-vp-dot:hover::after {
+  transform: scale(1.35);
+}
+
+/* the gutter is clipped by the list, so the ring goes round the dot */
+.fx-vp-dot:focus-visible {
+  outline: none;
+}
+
+.fx-vp-dot:focus-visible::after {
+  box-shadow: 0 0 0 3px var(--accent-ring);
+}
+
+.fx-vp-dot.idle::after {
+  display: none;
+}
+
+.fx-vp-name {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--fs-sm);
+  color: var(--text-2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fx-vp-val {
+  flex: none;
+  font-size: var(--fs-xs);
+  color: var(--text-3);
+}
+
+.fx-vp-slider {
+  padding: 0 1px;
+}
+
+.fx-vp-select {
+  flex: none;
+  width: auto;
+  max-width: 55%;
+  height: 26px;
+  padding: 0 var(--s-1-5);
+  font-size: var(--fs-sm);
+}
+
+.fx-vp-empty {
+  padding: var(--s-2) var(--s-0-5);
+  font-size: var(--fs-sm);
+  color: var(--text-3);
+}
+
+/* problems */
+.fx-notice {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2-5);
+}
+
+.fx-notice-text {
+  display: flex;
+  gap: var(--s-2);
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+  color: var(--text-2);
+}
+
+.fx-notice-text svg {
+  flex: none;
+  width: 15px;
+  height: 15px;
+  margin-top: var(--s-0-5);
+  color: var(--warning);
+}
+
+.fx-notice-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--s-1-5);
+}

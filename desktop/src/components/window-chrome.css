@@ -1,0 +1,48 @@
+.win-chrome {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: var(--z-titlebar);
+  display: flex;
+  justify-content: flex-end;
+  height: var(--titlebar-h);
+}
+
+.win-chrome-buttons {
+  display: flex;
+  height: 100%;
+}
+
+.win-chrome-buttons button {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 100%;
+  color: var(--text-2);
+  transition: background var(--t-fast), color var(--t-fast);
+}
+
+.win-chrome-buttons button svg {
+  width: 15px;
+  height: 15px;
+  stroke-width: 1.5;
+}
+
+.win-chrome-buttons button:nth-child(2) svg {
+  width: 12px;
+  height: 12px;
+}
+
+.win-chrome-buttons button:hover {
+  background: var(--surface-3);
+  color: var(--text-1);
+}
+
+.win-chrome-buttons button:focus-visible {
+  outline: 2px solid var(--accent-ring);
+  outline-offset: -2px;
+}
+
+.win-chrome-buttons button.close:hover {
+  background: #e81123;
+  color: #fff;
+}

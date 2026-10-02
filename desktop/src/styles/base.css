@@ -1,0 +1,138 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text-1);
+  font-family: var(--font);
+  font-size: var(--fs-md);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: default;
+}
+
+input,
+textarea,
+[contenteditable='true'] {
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+a {
+  color: var(--accent-strong);
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+p {
+  margin: 0;
+}
+
+:focus {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent-ring);
+  outline-offset: 2px;
+  border-radius: var(--r-sm);
+}
+
+::selection {
+  background: rgb(var(--accent-rgb) / 0.3);
+}
+
+/* scrollbars: thin and quiet */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(var(--ink) / 0.16) transparent;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(var(--ink) / 0.14);
+  border-radius: 10px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(var(--ink) / 0.26);
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+.mono {
+  font-family: var(--font-mono);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+/* Reduced motion for looping animations whose rules live elsewhere (onboarding logo, collapsed
+   canvas cards while running, React Flow's marching edges): they hold still. :root lifts these
+   above the original rules, some of which load after this file. */
+@media (prefers-reduced-motion: reduce) {
+  :root .ob-logo,
+  :root .ob-float,
+  :root .cn.collapsed.st-running .cn-head::after,
+  :root .cn.collapsed.st-queued .cn-head::after,
+  :root .react-flow__edge.animated path,
+  :root .react-flow__connection .animated {
+    animation: none;
+  }
+}

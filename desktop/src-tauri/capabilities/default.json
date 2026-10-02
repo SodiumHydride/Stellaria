@@ -1,0 +1,71 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "Everything the Stellaria frontend needs in the main window — and nothing more.",
+  "windows": ["main"],
+  "platforms": ["windows", "macOS", "linux"],
+  "permissions": [
+    "core:event:default",
+    "core:app:default",
+    "core:path:default",
+    "core:webview:default",
+    "core:window:default",
+    "core:window:allow-start-dragging",
+    "core:window:allow-minimize",
+    "core:window:allow-unminimize",
+    "core:window:allow-maximize",
+    "core:window:allow-unmaximize",
+    "core:window:allow-toggle-maximize",
+    "core:window:allow-close",
+    "core:window:allow-hide",
+    "core:window:allow-show",
+    "core:window:allow-set-focus",
+    "core:window:allow-set-progress-bar",
+
+    "dialog:allow-open",
+    "dialog:allow-save",
+
+    "notification:default",
+
+    "opener:allow-open-url",
+    "opener:allow-default-urls",
+    "opener:allow-reveal-item-in-dir",
+    {
+      "identifier": "opener:allow-open-path",
+      "allow": [
+        { "path": "**/*.wav" },
+        { "path": "**/*.flac" },
+        { "path": "**/*.mp3" },
+        { "path": "**/*.ogg" },
+        { "path": "**/*.m4a" },
+        { "path": "**/*.txt" },
+        { "path": "**/*.log" }
+      ]
+    },
+
+    "allow-get-shell-state",
+    "allow-detect-hardware",
+    "allow-disk-space",
+    "allow-set-library-path",
+    "allow-set-language",
+    "allow-bootstrap-start",
+    "allow-bootstrap-cancel",
+    "allow-bootstrap-repair",
+    "allow-finish-onboarding",
+    "allow-backend-start",
+    "allow-backend-restart",
+    "allow-backend-stop",
+    "allow-backend-logs",
+    "allow-set-close-to-tray",
+    "allow-accept-terms",
+    "allow-find-pythons",
+    "allow-set-tray-status",
+    "allow-reveal-path",
+    "allow-open-logs-folder",
+    "allow-quit-app",
+    "allow-frontend-pong",
+    "allow-check-python",
+    "allow-set-runtime-python",
+    "allow-install-runtime-requirements"
+  ]
+}

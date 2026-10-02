@@ -1,0 +1,432 @@
+.settings {
+  max-width: 820px;
+}
+
+.set-group {
+  margin-top: 22px;
+}
+
+.set-group-head {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: var(--s-2-5);
+}
+
+.set-group-head > svg {
+  width: 17px;
+  height: 17px;
+  color: var(--accent);
+}
+
+.set-card {
+  padding: var(--s-1-5) var(--s-4-5);
+  border-radius: var(--r-lg);
+}
+
+.set-row {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  min-height: 56px;
+  padding: var(--s-2-5) 0;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.set-row:last-child {
+  border-bottom: none;
+}
+
+.set-hint {
+  font-size: var(--fs-xs);
+}
+
+.set-path {
+  max-width: 320px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: var(--fs-sm);
+  color: var(--text-2);
+}
+
+.set-text {
+  padding: var(--s-3-5) 0;
+}
+
+.about {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3-5);
+  padding: var(--s-4) 0 0;
+}
+
+.credits {
+  margin: var(--s-2) 0 var(--s-4);
+  padding-left: var(--s-4-5);
+  color: var(--text-2);
+  font-size: var(--fs-sm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-1);
+}
+
+.set-group-head .btn {
+  margin-left: auto;
+}
+
+/* runtime */
+/* plugins */
+.plg-empty {
+  padding: var(--s-4) 0;
+  font-size: var(--fs-sm);
+}
+
+.plg {
+  border-bottom: 1px solid var(--hairline);
+}
+
+.plg:last-child {
+  border-bottom: none;
+}
+
+.plg-head {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2-5);
+  min-height: 52px;
+}
+
+.plg-toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  min-width: 0;
+  text-align: left;
+}
+
+.plg-chevron {
+  width: 15px;
+  height: 15px;
+  color: var(--text-3);
+  transform: rotate(-90deg);
+  transition: transform var(--t-med) var(--ease);
+}
+
+.plg.open .plg-chevron {
+  transform: none;
+}
+
+.plg-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+  padding: 0 0 var(--s-3-5) 23px;
+}
+
+.plg-folder,
+.plg-preview {
+  font-size: var(--fs-xs);
+  word-break: break-all;
+}
+
+.plg-preview {
+  padding: var(--s-2) var(--s-2-5);
+  border-radius: var(--r-sm);
+  background: var(--well-strong);
+}
+
+.plg-line {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--s-2-5);
+}
+
+.plg-pypath {
+  max-width: 340px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: var(--fs-xs);
+}
+
+.plg-check {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--s-2) var(--s-3-5);
+  font-size: var(--fs-sm);
+}
+
+.plg-audio {
+  height: 32px;
+}
+
+.plg-wizard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3-5);
+}
+
+/* audio plugins (VST3 / AU) */
+.set-anchor {
+  scroll-margin-top: 12px;
+}
+
+.set-tip-wrap {
+  display: inline-flex;
+}
+
+.vst-loading {
+  height: 44px;
+  margin: var(--s-3) 0;
+}
+
+.vst-install-progress {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2-5);
+  width: 200px;
+  font-size: var(--fs-xs);
+}
+
+.vst-install-progress .progress {
+  flex: 1;
+}
+
+.vst-folders {
+  padding: var(--s-3) 0 var(--s-3-5);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.vst-folders-head {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  min-height: 32px;
+}
+
+.vst-folder-list {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin: var(--s-2) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.vst-folder {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  min-height: 30px;
+  padding: var(--s-0-5) 3px var(--s-0-5) var(--s-2-5);
+  border-radius: var(--r-sm);
+  background: var(--surface-1);
+  border: 1px solid var(--hairline);
+}
+
+.vst-folder-path {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--fs-xs);
+  color: var(--text-2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.vst-folder-tag {
+  padding-right: 7px;
+  font-size: var(--fs-xs);
+  color: var(--text-3);
+}
+
+.vst-progress {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-1-5);
+  padding: 0 0 var(--s-3-5);
+}
+
+.vst-progress-text {
+  font-size: var(--fs-xs);
+}
+
+.vst-plugins {
+  padding: var(--s-3) 0 var(--s-3-5);
+}
+
+.vst-plugins-head {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  margin-bottom: var(--s-1-5);
+}
+
+.vst-search {
+  width: 240px;
+}
+
+.vst-search .input {
+  height: 30px;
+  font-size: var(--fs-sm);
+}
+
+.vst-list {
+  display: flex;
+  flex-direction: column;
+  max-height: 392px;
+  margin: 0 -8px;
+  padding: 0 var(--s-2);
+  overflow: auto;
+}
+
+.vst-list.more {
+  -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 28px), transparent);
+  mask-image: linear-gradient(to bottom, #000 calc(100% - 28px), transparent);
+}
+
+.vst-plugin {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  min-height: 46px;
+  padding: var(--s-1) var(--s-2);
+  border-radius: var(--r-sm);
+  transition: background var(--t-fast);
+}
+
+.vst-plugin:hover {
+  background: var(--surface-hover);
+}
+
+.vst-plugin-main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.vst-plugin-name,
+.vst-plugin-meta {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.vst-plugin-name {
+  font-size: var(--fs-md);
+  font-weight: 600;
+}
+
+.vst-plugin-meta {
+  font-size: var(--fs-xs);
+  color: var(--text-3);
+}
+
+.vst-plugin-params {
+  font-size: var(--fs-xs);
+}
+
+.vst-plugin.is-instrument .vst-plugin-main,
+.vst-plugin.is-instrument .vst-fmt {
+  opacity: 0.5;
+}
+
+.vst-instrument {
+  cursor: help;
+}
+
+.vst-fmt {
+  flex: none;
+  width: 42px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  border: 1px solid var(--hairline);
+  background: var(--surface-1);
+  text-align: center;
+  font-size: var(--fs-xs);
+  font-weight: 650;
+  letter-spacing: 0.04em;
+  color: var(--text-3);
+}
+
+.vst-empty {
+  padding: var(--s-1-5) 0;
+  font-size: var(--fs-sm);
+}
+
+.vst-failed {
+  margin-top: var(--s-2);
+}
+
+.vst-failed-toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--s-1-5);
+  padding: var(--s-1-5) 0;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--warning);
+}
+
+.vst-failed-chevron,
+.vst-failed-icon {
+  width: 14px;
+  height: 14px;
+}
+
+.vst-failed-chevron {
+  transform: rotate(-90deg);
+  transition: transform var(--t-med) var(--ease);
+}
+
+.vst-failed.open .vst-failed-chevron {
+  transform: none;
+}
+
+.vst-failed-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-1-5);
+  margin-top: var(--s-1);
+}
+
+.vst-failed-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-1);
+  padding: var(--s-2-5) var(--s-3);
+  border-radius: var(--r-md);
+  background: var(--surface-1);
+  border: 1px solid var(--hairline);
+}
+
+.vst-failed-error {
+  font-size: var(--fs-sm);
+  color: var(--critical);
+}
+
+.vst-failed-path {
+  font-size: var(--fs-xs);
+  word-break: break-all;
+}
+
+.set-path.is-unset {
+  color: var(--text-3);
+}
+
+/* about → diagnostics */
+.set-about-row {
+  margin-top: var(--s-3-5);
+  border-top: 1px solid var(--hairline);
+}
+
+.rt-picker {
+  margin: 0 0 var(--s-3);
+  padding: var(--s-3) var(--s-3-5);
+  border-radius: var(--r-md);
+  background: var(--surface-1);
+  border: 1px solid var(--hairline);
+}

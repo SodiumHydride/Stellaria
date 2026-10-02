@@ -1,0 +1,41 @@
+# Runtime packages for the Stellaria Python venv (torch/torchaudio are installed separately by
+# the shell, per hardware variant; triton-windows is added by the shell for the cu128 variant).
+# Versions are the ones the backend test-suite and the CPU end-to-end test ran against.
+
+# --- DDSP-SVC engine (requirements.txt minus GUI-only packages) ---
+librosa==0.11.0
+matplotlib==3.11.2
+numpy==1.26.4
+praat-parselmouth==0.4.7
+pyworld==0.3.5
+# pyworld imports pkg_resources, which setuptools >= 81 no longer ships
+setuptools==80.9.0
+PyYAML==6.0.3
+resampy==0.4.3
+scikit-learn==1.9.1
+scipy==1.17.1
+soundfile==0.14.0
+soxr==1.1.0
+tensorboard==2.21.0
+protobuf==7.36.2
+torchcrepe==0.0.24
+torchfcpe==0.0.4
+tqdm==4.70.1
+transformers==5.18.0
+
+# --- Stellaria backend ---
+fastapi==0.142.2
+starlette==1.7.0
+uvicorn==0.54.0
+websockets==17.1
+python-multipart==0.0.32
+httpx==0.28.1
+pydantic==2.13.5
+imageio-ffmpeg==0.6.0
+# process-node DSP (stellaria_backend/dsp): Signalsmith Stretch (MIT) for pitch/tempo, LAME (LGPL-3.0)
+# for gapless MP3 export; both ship wheels for win-x64, macOS arm64/x64 and linux-x64, py3.10-3.12
+python-stretch==0.3.1
+lameenc==1.8.4
+psutil==7.2.2
+pillow==12.3.0
+nvidia-ml-py==13.615.71; sys_platform != "darwin"

@@ -1,0 +1,193 @@
+.app {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.app-main {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+}
+
+/* a space fades in from the side it sits on in the switcher; `backwards` leaves no transform
+   behind once it has arrived, so nothing fixed inside is ever positioned against it */
+.space-stage {
+  height: 100%;
+  animation: space-in calc(var(--t-med) * 1.3) var(--ease) backwards;
+}
+
+@keyframes space-in {
+  from {
+    opacity: 0;
+    transform: translateX(calc(var(--enter-dir, 1) * 14px));
+  }
+}
+
+/* standard page frame for spaces that scroll as a document (resources, settings) */
+.page {
+  height: 100%;
+  overflow: auto;
+  padding: var(--s-2) 28px 110px;
+}
+
+.page-inner {
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+.page-header {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--s-4);
+  margin: var(--s-4-5) 0 22px;
+}
+
+.page-title {
+  font-family: var(--font-display);
+  font-size: var(--fs-3xl);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1.15;
+}
+
+.page-subtitle {
+  margin-top: var(--s-1-5);
+  color: var(--text-2);
+}
+
+.boot {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-4-5);
+  text-align: center;
+  padding: var(--s-6);
+}
+
+@keyframes boot-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.boot-text {
+  color: var(--text-2);
+  font-size: var(--fs-lg);
+}
+
+.boot-card {
+  max-width: 560px;
+  padding: 28px;
+  text-align: left;
+}
+
+.repair-path {
+  margin: var(--s-1-5) 0 0;
+  font-size: var(--fs-xs);
+  word-break: break-all;
+}
+
+.repair-note {
+  margin: var(--s-1-5) 0 0;
+  font-size: var(--fs-sm);
+}
+
+.repair-spin {
+  width: 14px;
+  height: 14px;
+  margin-right: var(--s-1-5);
+  vertical-align: -2px;
+}
+
+.boot-log {
+  margin-top: var(--s-3-5);
+  max-height: 200px;
+  overflow: auto;
+  padding: var(--s-2-5) var(--s-3);
+  border-radius: var(--r-md);
+  background: var(--well-strong);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--text-2);
+  white-space: pre-wrap;
+  user-select: text;
+}
+
+/* a screen crashed */
+.route-error {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  min-height: 60vh;
+  padding: var(--s-6);
+}
+
+.route-error-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-2-5);
+  max-width: 520px;
+  padding: 28px 28px 22px;
+  border-radius: var(--r-xl, 20px);
+  text-align: center;
+}
+
+.route-error-icon {
+  width: 28px;
+  height: 28px;
+  color: var(--warning);
+}
+
+.route-error-card h2 {
+  margin: 0;
+  font-size: var(--fs-xl, 18px);
+}
+
+.route-error-text {
+  max-width: 100%;
+  max-height: 120px;
+  overflow: auto;
+  margin: var(--s-1) 0 var(--s-2);
+  padding: var(--s-2) var(--s-2-5);
+  border-radius: var(--r-sm);
+  background: var(--well);
+  font-size: var(--fs-xs);
+  color: var(--text-2);
+  white-space: pre-wrap;
+  text-align: left;
+}
+
+/* required models still missing (the user chose "later" at setup) */
+.missing-models {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2-5);
+  margin: 0 var(--s-4) var(--s-2);
+  padding: var(--s-1-5) var(--s-2) var(--s-1-5) var(--s-3-5);
+  border-radius: var(--r-md);
+  font-size: var(--fs-sm);
+}
+
+.missing-models > svg {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  color: var(--warning);
+}
+
+.missing-models > span {
+  flex: 1;
+  min-width: 0;
+}

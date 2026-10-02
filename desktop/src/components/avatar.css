@@ -1,0 +1,27 @@
+.avatar {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  border-radius: 50%;
+  background: var(--voice);
+  box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.06);
+  color: color-mix(in srgb, var(--voice) 28%, #1f1c19);
+  font-weight: 600;
+  overflow: hidden;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatar-initial {
+  line-height: 1;
+}
+
+.avatar.with-ring {
+  outline: 2px solid var(--voice);
+  outline-offset: 2px;
+}

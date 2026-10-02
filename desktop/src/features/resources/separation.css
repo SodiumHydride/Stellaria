@@ -1,0 +1,130 @@
+/* vocal separation model picker: a radio list, each row with what it needs to run */
+.sep-models {
+  display: grid;
+  gap: var(--s-0-5);
+}
+
+.sep-model-row {
+  display: flex;
+  align-items: center;
+  gap: var(--s-1-5);
+  min-width: 0;
+}
+
+.sep-model {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: var(--s-2);
+  min-width: 0;
+  min-height: 32px;
+  padding: var(--s-1) var(--s-2);
+  border-radius: var(--r-sm);
+  text-align: left;
+  font-size: var(--fs-sm);
+  color: var(--text-1);
+  transition: background var(--t-fast);
+}
+
+.sep-model:hover:not(:disabled) {
+  background: var(--surface-hover);
+}
+
+.sep-model.on {
+  background: var(--surface-active);
+}
+
+.sep-model:disabled {
+  cursor: default;
+  color: var(--text-3);
+}
+
+.sep-model:focus-visible {
+  outline: 2px solid var(--accent-ring);
+  outline-offset: -2px;
+}
+
+.sep-radio {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid var(--control-border);
+  background: var(--well);
+}
+
+.sep-model.on .sep-radio {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--text-on-primary);
+}
+
+.sep-radio svg {
+  width: 11px;
+  height: 11px;
+  stroke-width: 3;
+}
+
+.sep-name {
+  min-width: 0;
+  overflow: hidden;
+  font-weight: 560;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.sep-meta {
+  margin-left: auto;
+  min-width: 0;
+  overflow: hidden;
+  font-size: var(--fs-xs);
+  color: var(--text-3);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.sep-badge {
+  flex: none;
+}
+
+.sep-get {
+  flex: none;
+}
+
+.sep-models.compact .sep-model {
+  min-height: 30px;
+}
+
+.sep-models.compact .sep-get {
+  --btn-h: 28px;
+  padding: 0 var(--s-2);
+}
+
+.sep-models.compact .sep-get.icon-only {
+  min-width: 28px;
+  padding: 0 var(--s-1-5);
+}
+
+/* narrow panels: names may take two lines instead of being cut */
+.sep-models.compact .sep-name {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  white-space: normal;
+  line-height: 1.3;
+}
+
+/* the Resources page: separation and cleanup models, one card each */
+.sep-cards {
+  display: grid;
+  gap: var(--s-3);
+}
+
+.sep-card-title {
+  margin: 0 0 var(--s-1);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text-1);
+}

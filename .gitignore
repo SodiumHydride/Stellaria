@@ -1,0 +1,9 @@
+# local dev library/data used by scripts/dev-backend.*
+.dev/
+# python test/cache artifacts
+.pytest_cache/
+
+# build info and python bytecode
+*.tsbuildinfo
+__pycache__/
+*.pyc

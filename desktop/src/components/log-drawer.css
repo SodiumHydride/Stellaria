@@ -1,0 +1,63 @@
+.log-drawer {
+  position: fixed;
+  z-index: var(--z-overlay);
+  right: 16px;
+  top: calc(var(--titlebar-h) + 8px);
+  bottom: 16px;
+  width: min(720px, calc(100vw - 32px));
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  animation: log-in var(--t-med) var(--ease);
+}
+
+@keyframes log-in {
+  from {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.log-head {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  padding: var(--s-3) var(--s-3) var(--s-3) var(--s-4-5);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.log-error {
+  padding: var(--s-2-5) var(--s-4-5);
+  background: var(--critical-soft);
+  color: var(--critical);
+  font-size: var(--fs-sm);
+}
+
+.log-body {
+  flex: 1;
+  overflow: auto;
+  padding: var(--s-3) var(--s-4-5) var(--s-4-5);
+  font-size: var(--fs-sm);
+  line-height: 1.6;
+  color: var(--text-2);
+  background: var(--well-strong);
+  user-select: text;
+}
+
+.log-line {
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.log-line.err {
+  color: var(--critical);
+}
+
+.log-line.warn {
+  color: var(--warning);
+}

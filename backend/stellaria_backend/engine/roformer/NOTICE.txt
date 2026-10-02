@@ -1,0 +1,69 @@
+Roformer vocal separation and cleanup models
+
+attend.py, bs_roformer.py, mel_band_roformer.py and the vocal separation configs in configs/
+(mel_roformer_kim.yaml, bs_roformer_viperx.yaml) are taken from
+Music-Source-Separation-Training by Roman Solovyev (ZFTurbo):
+  https://github.com/ZFTurbo/Music-Source-Separation-Training
+whose Roformer models build on BS-RoFormer by Phil Wang (lucidrains):
+  https://github.com/lucidrains/BS-RoFormer
+Both are released under the MIT licence (texts below). Each file says what was changed.
+
+The cleanup configs (dereverb_mbr_anvuew.yaml, dereverb_echo_mbr_fused.yaml) list the model
+settings of the dereverb checkpoints by anvuew and by Sucial and the MSST-WebUI community, as
+MSST-WebUI publishes them next to the checkpoints it hosts:
+  https://github.com/SUC-DriverOld/MSST-WebUI
+  https://huggingface.co/Sucial/MSST-WebUI
+Only the settings needed to build the models are kept.
+
+The model weights (checkpoints) are not part of this folder. They are downloaded or imported
+separately; their authors have not declared a licence for them.
+
+-------------------------------------------------------------------------------------------
+Music-Source-Separation-Training
+
+MIT License
+
+Copyright (c) 2024 Roman Solovyev (ZFTurbo)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+-------------------------------------------------------------------------------------------
+BS-RoFormer
+
+MIT License
+
+Copyright (c) 2023 Phil Wang
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

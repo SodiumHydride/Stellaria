@@ -1,0 +1,61 @@
+[package]
+name = "stellaria"
+version = "0.1.0"
+description = "星籁 Stellaria — desktop studio for DDSP-SVC"
+authors = ["Stellaria contributors"]
+license-file = "../../LICENSE"
+edition = "2021"
+rust-version = "1.85"
+publish = false
+
+[lib]
+name = "stellaria_lib"
+crate-type = ["rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2.7", features = [] }
+
+[dependencies]
+tauri = { version = "2.12", features = ["tray-icon", "image-png", "protocol-asset"] }
+tauri-plugin-dialog = "2.8"
+tauri-plugin-notification = "2.5"
+tauri-plugin-opener = "2.7"
+tauri-plugin-window-state = "2.5"
+tauri-plugin-log = "2.10"
+log = "0.4"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+thiserror = "2"
+anyhow = "1"
+tokio = { version = "1", features = ["process", "io-util", "time", "sync", "macros", "rt-multi-thread", "fs", "signal"] }
+tokio-util = "0.7"
+reqwest = { version = "0.13", default-features = false, features = ["json", "native-tls", "system-proxy"] }
+sysinfo = { version = "0.39", default-features = false, features = ["system"] }
+getrandom = "0.4"
+sha2 = "0.11"
+regex = "1"
+percent-encoding = "2"
+chrono = { version = "0.4", default-features = false, features = ["clock", "std"] }
+sys-locale = "0.3"
+dirs = "7"
+
+[target.'cfg(not(any(target_os = "android", target_os = "ios")))'.dependencies]
+tauri-plugin-single-instance = "2.5"
+
+[target.'cfg(unix)'.dependencies]
+libc = "0.2"
+
+[target.'cfg(windows)'.dependencies]
+windows-sys = { version = "0.61", features = [
+  "Win32_Foundation",
+  "Win32_Security",
+  "Win32_Storage_FileSystem",
+  "Win32_System_JobObjects",
+  "Win32_System_Threading",
+] }
+
+[profile.release]
+codegen-units = 1
+lto = true
+opt-level = "s"
+strip = true

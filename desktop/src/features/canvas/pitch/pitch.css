@@ -1,0 +1,188 @@
+/* The pitch editor: over the creation workspace, below the title bar (window controls stay). */
+.pitch-editor {
+  position: fixed;
+  inset: var(--titlebar-h) 0 0 0;
+  z-index: calc(var(--z-dock) + 5);
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  outline: none;
+  animation: pe-in var(--t-med, 180ms) ease-out;
+}
+
+@keyframes pe-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pitch-editor {
+    animation: none;
+  }
+}
+
+.pe-head,
+.pe-tools,
+.pe-foot {
+  display: flex;
+  align-items: center;
+  gap: var(--s-1-5);
+  min-width: 0;
+  padding: var(--s-2) var(--s-3);
+}
+
+.pe-head {
+  border-bottom: 1px solid var(--hairline);
+}
+
+.pe-title {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  min-width: 0;
+  margin-left: var(--s-1);
+  font-size: var(--fs-md, 15px);
+}
+
+.pe-title strong {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.pe-title .muted {
+  font-size: var(--fs-sm);
+  white-space: nowrap;
+}
+
+.pe-tools {
+  flex-wrap: wrap;
+  row-gap: var(--s-1);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.pe-sep {
+  width: 1px;
+  height: 20px;
+  margin: 0 var(--s-1);
+  background: var(--hairline);
+}
+
+.pe-sel {
+  min-width: 7em;
+  font-size: var(--fs-sm);
+}
+
+.pe-amount {
+  display: flex;
+  align-items: center;
+  gap: var(--s-1-5);
+  width: 130px;
+  font-size: var(--fs-xs);
+}
+
+.pe-amount > :first-child {
+  flex: 1;
+}
+
+.pe-key {
+  display: flex;
+  align-items: center;
+  gap: var(--s-1-5);
+  font-size: var(--fs-sm);
+}
+
+.pe-key .input {
+  min-width: 10.5em;
+  height: 30px;
+  padding: 0 var(--s-2);
+}
+
+.pitch-editor .icon-btn.on {
+  color: var(--text-1);
+  background: var(--surface-active);
+}
+
+.pe-stage {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.pe-canvas {
+  display: block;
+  touch-action: none;
+}
+
+.pe-playhead {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 2px;
+  margin-left: -1px;
+  background: var(--accent);
+  pointer-events: none;
+}
+
+.pe-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-2);
+  height: 100%;
+  text-align: center;
+}
+
+.pe-empty svg {
+  width: 22px;
+  height: 22px;
+  color: var(--text-3);
+}
+
+.pe-empty p {
+  margin: 0;
+  max-width: 34em;
+  font-size: var(--fs-sm);
+}
+
+.pe-overview {
+  border-top: 1px solid var(--hairline);
+  background: var(--surface-1);
+  cursor: pointer;
+}
+
+.pe-overview canvas {
+  display: block;
+  touch-action: none;
+}
+
+.pe-foot {
+  border-top: 1px solid var(--hairline);
+}
+
+.pe-time {
+  font-size: var(--fs-sm);
+}
+
+.pe-hints {
+  min-width: 0;
+  overflow: hidden;
+  font-size: var(--fs-xs);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 760px) {
+  .pe-hints {
+    display: none;
+  }
+
+  .pe-title .muted {
+    display: none;
+  }
+}

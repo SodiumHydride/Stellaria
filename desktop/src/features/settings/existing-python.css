@@ -1,0 +1,157 @@
+.rt-check {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2-5);
+  margin: 0 0 var(--s-3);
+  padding: var(--s-3) var(--s-3-5);
+  border-radius: var(--r-md);
+  background: var(--surface-1);
+  border: 1px solid var(--hairline);
+  font-size: var(--fs-sm);
+}
+
+.rt-path,
+.rt-missing {
+  font-size: var(--fs-xs);
+  word-break: break-all;
+}
+
+.rt-note {
+  display: flex;
+  align-items: center;
+  gap: var(--s-1-5);
+  color: var(--text-2);
+}
+
+.rt-note svg {
+  flex: none;
+  width: 14px;
+  height: 14px;
+  color: var(--good);
+}
+
+.rt-hint {
+  font-size: var(--fs-xs);
+}
+
+.rt-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2) var(--s-4-5);
+}
+
+/* "I already have DDSP-SVC": find and pick an existing Python */
+.xp {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3-5);
+  text-align: left;
+  container-type: inline-size;
+}
+
+.xp-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+}
+
+.xp-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-1-5);
+}
+
+.xp-folder {
+  font-size: var(--fs-xs);
+  word-break: break-all;
+}
+
+.xp-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-1);
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.xp-item {
+  display: grid;
+  grid-template-columns: auto auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--s-2-5);
+  padding: var(--s-2) var(--s-2-5);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-sm);
+  background: var(--surface-1);
+  text-align: left;
+  transition: border-color var(--t-fast), background var(--t-fast);
+}
+
+.xp-item:hover {
+  background: var(--surface-active);
+}
+
+.xp-item.on {
+  border-color: rgb(var(--accent-rgb) / 0.7);
+  background: var(--accent-soft);
+}
+
+.xp-item-name {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.xp-item-tags {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-1);
+}
+
+.xp-item .xp-probe {
+  width: 12px;
+  height: 12px;
+  color: var(--text-3);
+}
+
+.xp-note {
+  font-size: var(--fs-xs);
+}
+
+.xp-item-path {
+  min-width: 0;
+  overflow: hidden;
+  font-size: var(--fs-xs);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: left;
+}
+
+.xp-item svg {
+  width: 14px;
+  height: 14px;
+  color: var(--text-4);
+}
+
+.xp-empty {
+  margin: 0;
+  font-size: var(--fs-sm);
+}
+
+/* narrow panels: the path takes its own line under the name and tags */
+@container (max-width: 520px) {
+  .xp-item {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+  }
+
+  .xp-item-path {
+    grid-column: 1 / -2;
+    grid-row: 2;
+  }
+}
+
+/* settings → runtime: the user's Python runs through Stellaria's layer */
+.rt-layered {
+  display: block;
+  margin-top: var(--s-0-5);
+}
