@@ -203,5 +203,7 @@ def short_term(x: np.ndarray, sr: float, window_s: float = 3.0, hop_s: float = 0
     hop_energy = (channel_weights(xk.shape[0])[:, None] * per_channel).sum(axis=0)
     k = max(1, int(round(window_s / hop_s)))
     ms = ndimage.uniform_filter1d(hop_energy, size=k, mode="constant") / hop
+    # the running sum leaves round-off residue (~1e-18 on macOS arm64) in all-silent windows
+    ms[ndimage.maximum_filter1d(hop_energy, size=k, mode="constant") == 0.0] = 0.0
     with np.errstate(divide="ignore"):
         return -0.691 + 10.0 * np.log10(np.maximum(ms, 0.0))
